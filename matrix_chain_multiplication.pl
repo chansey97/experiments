@@ -5,7 +5,7 @@
 :- chr_constraint
   cell(+,+,+),
   p(+,+),
-  currentSize(+), % size of the sub problems
+  currentSize(+), % size of the sub problems as recurrence stepper
   maximum(+).
 
 %% It seems that CHRrp is not required, the refined operational semantics is sufficient,
