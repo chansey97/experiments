@@ -31,6 +31,8 @@ result @ split(X,X,K1,Y,_) \ printOrder(X,Y) <=> write("("), write(X), write("*"
 result @ split(X,K,Y,Y,_) \ printOrder(X,Y) <=> write("("),  printOrder(X,K), write("*"), write(Y), write(")").
 result @ split(X,K,K1,Y,_) \ printOrder(X,Y) <=> write("("), printOrder(X,K), write("*"), printOrder(K1,Y), write(")").
 
+%% https://www.mimuw.edu.pl/~erykk/algovis/mcm.html
+
 %% ?- cell(1,1,0), cell(2,2,0), cell(3,3,0), cell(4,4,0), cell(5,5,0),
 %% p(0,20), p(1,10), p(2,15), p(3,20), p(4,10), p(5,10),
 %% maxSize(4), currentSize(0), printOrder(1,5).
