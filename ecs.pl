@@ -64,4 +64,36 @@ game_loop(FID) :-
   FID2 is FID+1,
   game_loop(FID2).
 
-%% ?- create_world,update(1),draw(1),cast(0,morph),update(2),draw(2).
+
+%% ?- create_world, game_loop(1).
+%@ |:  
+%@ game_loop input  
+%@ render frame:1, eid:0, mage.png at (13.102860554019387, 23.102860554019387) 
+%@ render frame:1, eid:1, bear.png at (10.433501820862503, 25.433501820862503) 
+%@ render frame:1, eid:3, tree.png at (2, 2) 
+%@ render frame:1, eid:2, tree.png at (1, 1) 
+%@ |:  
+%@ game_loop input  
+%@ render frame:2, eid:1, bear.png at (8.260938770171123, 23.260938770171123) 
+%@ render frame:2, eid:0, mage.png at (17.815774614257755, 27.815774614257755) 
+%@ render frame:2, eid:3, tree.png at (2, 2) 
+%@ render frame:2, eid:2, tree.png at (1, 1) 
+%@ |:  
+%@ game_loop input  
+%@ render frame:3, eid:0, mage.png at (17.21869537071213, 27.21869537071213) 
+%@ render frame:3, eid:1, bear.png at (3.249953773985373, 18.249953773985375) 
+%@ render frame:3, eid:3, tree.png at (2, 2) 
+%@ render frame:3, eid:2, tree.png at (1, 1) 
+%@ |: a
+%@ game_loop input a
+%@ render frame:4, eid:1, bear.png at (7.741928767925851, 22.741928767925852) 
+%@ render frame:4, eid:0, bear.png at (21.20683092216393, 31.20683092216393) 
+%@ render frame:4, eid:3, tree.png at (2, 2) 
+%@ render frame:4, eid:2, tree.png at (1, 1) 
+%@ |:  
+%@ game_loop input  
+%@ render frame:5, eid:0, bear.png at (17.316575536036588, 27.316575536036588) 
+%@ render frame:5, eid:1, bear.png at (3.9896393440394755, 18.989639344039478) 
+%@ render frame:5, eid:3, tree.png at (2, 2) 
+%@ render frame:5, eid:2, tree.png at (1, 1) 
+%@ |: 
