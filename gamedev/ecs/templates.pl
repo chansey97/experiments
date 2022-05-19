@@ -14,16 +14,16 @@ template(t_abil_keyboard_move, down_key, 40).
 
 %% t_abil_move
 template(t_abil_move, class, c_abil_move).
-template(t_abil_move, cooldown, 0).
+template(t_abil_move, cost_cooldown, 0).
 
 %% t_abil_attack
 template(t_abil_attack, class, c_abil_attack).
-template(t_abil_attack, cooldown, 0).
+template(t_abil_attack, cost_cooldown, 0).
 
 %% t_abil_morph
 template(t_abil_morph, class, c_abil_morph).
-template(t_abil_morph, energy, 50).
-template(t_abil_morph, cooldown, 10).
+template(t_abil_morph, cost_energy, 50).
+template(t_abil_morph, cost_cooldown, 10).
 template(t_abil_morph, template, unknown).
 
 %% Units
@@ -67,6 +67,12 @@ template(mage, class, c_unit).
 template(mage, parent, t_unit).
 template(mage, speed, 5).
 template(mage, abils, [keyboard_move, morph_bear]).
+
+%% mage with duplicate abils
+template(mage_dup_abils, class, c_unit).
+template(mage_dup_abils, parent, t_unit).
+template(mage_dup_abils, speed, 5).
+template(mage_dup_abils, abils, [keyboard_move, morph_bear, morph_bear]).
 
 %% bear
 template(bear, class, c_unit).

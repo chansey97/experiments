@@ -7,44 +7,124 @@ input_system @ update(input, FID), c(_, player_control, UID) #passive ==>
   format("update(input, FID=~w) ", [FID]),
   (   S="a\n"
       %% TODO: c/5 can be used for trigger
-  ->  c(UID, abil_start, abil_morph, morph_into_bear, _) % assuming morph is a instant ability, so no cast system update needed
+  ->  c(UID, event_c_unit_start_abil, morph_bear) % assuming morph is a instant ability, so no cast system update needed
   ;   true   
   ).
 input_system @ update(input, FID) <=> true.
 
-abil_morph_start @
-  c(UID, abils, AIDs) #passive,
-  c(UID, energy, Energy) #passive,  
-  c(AID, type, abil_morph) #passive,
-  c(AID, energy, CostEnergy) #passive
-  \
-  c(UID, abil_start, abil_morph, T, _)
-  <=>
-    memberchk(AID, AIDs), % TODO: not efficient
-    Energy >= CostEnergy |
-    format("abil_morph_start 111 ~n"),
-    Energy2 is Energy - CostEnergy,
-    format("abil_morph_start 222 ~n"),    
-    set_component(UID, energy, Energy2),
-    format("abil_morph_start 333 ~n"),    
-    c(UID, abil_execute, abil_morph, T, _).
 
-abil_morph_execute @
+%% abil execute workflow
+%% event_c_unit_start_abil -> event_c_abil_check -> event_c_abil_morph_check -> -> event_c_abil_morph_execute
+
+%% TODO:
+%% If a abil requrie a target, the target will be a component of abil entity
+
+%% c_unit_start_abil
+event_c_unit_start_abil @
+  c(UID, event_c_unit_start_abil, Template),
+  c(UID, abils, AIDs) # passive,
+  c(AID, template, Template) # passive
+  ==>
+    memberchk(AID, AIDs)
+    |  
+    c(AID, event_c_abil_check).
+
+event_c_unit_start_abil @ c(_, event_c_unit_start_abil, _) <=> true.
+
+%% c_abil
+event_c_abil_check @
+  c(AID, event_c_abil_check),
+  c(AID, template, Template) # passive,
+  c(AID, owner_id, UID) # passive
+  ==>
+    true % alway true, because c_abil no limit
+    |
+    c(AID, event_c_abil_morph_check).
+
+event_c_abil_check @ c(_, event_c_abil_check) <=> true.
+
+%% c_abil_morph
+event_c_abil_morph_check @
+  c(AID, event_c_abil_morph_check),
+  c(AID, template, Template) # passive,
+  c(AID, owner_id, UID) # passive,
+  c(AID, cooldown, Cooldown) # passive,
+  c(UID, energy, Energy) #passive
+  ==>
+    template_field_value_get(Template, cost_energy, CostEnergy),
+    Energy >= CostEnergy,
+    Cooldown =:= 0
+    |
+    c(AID, event_c_abil_morph_execute).
+
+event_c_abil_morph_check @ c(_, event_c_abil_morph_check) <=> true.
+
+event_c_abil_morph_execute @
+  c(AID, template, AbilTemplate) # passive,
+  c(AID, owner_id, UID) # passive,
+  c(AID, cooldown, Cooldown) # passive,
+  c(UID, template, UnitTemplate) #passive,
   c(UID, energy, Energy) #passive,
   c(UID, energy_max, EnergyMax) #passive,  
   c(UID, life, Life) #passive,
   c(UID, life_max, LifeMax) #passive
   \
-  c(UID, abil_execute, abil_morph, AbilTemplate, _)
+  c(AID, event_c_abil_morph_execute)
   <=>
-    template_abil(AbilTemplate, template, TemplateDst), !,
-    template_unit(TemplateDst, life_max, LifeMaxDst), !,
-    template_unit(TemplateDst, energy_max, EnergyMaxDst), !,   
-    Life2 is (Life / LifeMax)*LifeMaxDst,    
-    Energy2 is (Energy / EnergyMax)*EnergyMaxDst,    
-    replace_unit_template_components(UID, TemplateDst),   
+    template_field_value_get(UnitTemplate, class, UnitClass),
+    template_field_value_get(AbilTemplate, cost_energy, CostEnergy),
+    template_field_value_get(AbilTemplate, cost_cooldown, CostCooldown),
+    template_field_value_get(AbilTemplate, template, MorphTargetTemplate),
+    template_field_value_get(MorphTargetTemplate, class, MorphTargetClass),
+    template_field_value_get(MorphTargetTemplate, life_max, MorphTargetLifeMax),
+    template_field_value_get(MorphTargetTemplate, energy_max, MorphTargetEnergyMax), 
+    Life2 is (Life / LifeMax)*MorphTargetLifeMax,
+    Energy2 is (Energy - CostEnergy) / EnergyMax * MorphTargetEnergyMax,
+    remove_template_components(UID, UnitClass),
+    add_template_components(UID, MorphTargetClass, MorphTargetTemplate),
     set_component(UID, life, Life2), 
-    set_component(UID, energy, Energy2).
+    set_component(UID, energy, Energy2),
+    set_component(AID, cooldown, CostCooldown).
+
+
+
+
+%% abil_morph_start @
+%%   c(UID, abils, AIDs) # passive,
+%%   c(UID, energy, Energy) # passive,
+%%   c(AID, class, c_abil_morph) # passive,
+%%   c(AID, energy, CostEnergy) # passive
+%%   c(AID, cooldown, CostCooldown) #passive
+%%   \
+%%   c(UID, abil_start, Template)
+%%   <=>
+%%     % TODO: not efficient    
+%%     memberchk(AID, AIDs), 
+%%     Energy >= CostEnergy
+%%     |
+%%     format("abil_morph_start 111 ~n"),
+%%     Energy2 is Energy - CostEnergy,
+%%     format("abil_morph_start 222 ~n"),    
+%%     set_component(UID, energy, Energy2),
+%%     format("abil_morph_start 333 ~n"),    
+%%     c(UID, abil_execute, abil_morph, Template, _).
+
+%% abil_morph_execute @
+%%   c(UID, energy, Energy) #passive,
+%%   c(UID, energy_max, EnergyMax) #passive,  
+%%   c(UID, life, Life) #passive,
+%%   c(UID, life_max, LifeMax) #passive
+%%   \
+%%   c(UID, abil_execute, abil_morph, AbilTemplate, _)
+%%   <=>
+%%     template_abil(AbilTemplate, template, TemplateDst), !,
+%%     template_unit(TemplateDst, life_max, LifeMaxDst), !,
+%%     template_unit(TemplateDst, energy_max, EnergyMaxDst), !,   
+%%     Life2 is (Life / LifeMax)*LifeMaxDst,    
+%%     Energy2 is (Energy / EnergyMax)*EnergyMaxDst,    
+%%     replace_unit_template_components(UID, TemplateDst),   
+%%     set_component(UID, life, Life2), 
+%%     set_component(UID, energy, Energy2).
 
 %% movement_system @ update(move, FID), c(EID, velocity, V) #passive \ c(EID, position, X-Y) #passive <=>
 %%   random(-1.0,1.0,Rand),

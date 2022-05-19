@@ -12,6 +12,7 @@
   %% template_field_value_get/3,
   
   next_e/1,
+  c/2,  
   c/3,
   c/4,
   c/5,  
@@ -78,11 +79,9 @@ ps.
 %@ AID = 1,
 %@ next_e(2),
 %@ c(1,owner_id,0),
-%@ c(1,cooldown_max,0),
 %@ c(1,cooldown,0),
 %@ c(1,template,move),
 %@ c(1,class,c_abil_move).
-
 
 %% ?- next_e(0), create_unit(mage, 10, 20, UID).
 %@ UID = 0,
@@ -90,9 +89,7 @@ ps.
 %@ c(0,position,10-20),
 %@ c(0,abils,[1,2]),
 %@ c(2,owner_id,0),
-%@ c(2,cooldown_max,10),
 %@ c(2,cooldown,0),
-%@ c(2,energy,50),
 %@ c(2,template,morph_bear),
 %@ c(2,class,c_abil_morph),
 %@ c(1,owner_id,0),
@@ -105,6 +102,223 @@ ps.
 %@ c(0,life,100),
 %@ c(0,bounds,1),
 %@ c(0,template,mage).
+
+%% ?- next_e(0), create_unit(mage, 10, 20, UID), c(UID, event_c_unit_start_abil, morph_bear).
+%@ UID = 0,
+%@ next_e(4),
+%@ c(2,cooldown,10),
+%@ c(0,energy,0.0),
+%@ c(0,life,500),
+%@ c(0,abils,[3]),
+%@ c(3,owner_id,0),
+%@ c(3,cooldown,0),
+%@ c(3,template,move),
+%@ c(3,class,c_abil_move),
+%@ c(0,speed,7),
+%@ c(0,energy_max,0),
+%@ c(0,life_max,500),
+%@ c(0,bounds,2),
+%@ c(0,template,bear),
+%@ c(0,position,10-20),
+%@ c(2,owner_id,0),
+%@ c(2,template,morph_bear),
+%@ c(2,class,c_abil_morph),
+%@ c(1,owner_id,0),
+%@ c(1,template,keyboard_move),
+%@ c(1,class,c_abil_keyboard_move),
+%@ c(0,template,mage).
+
+%% ?- next_e(0), create_unit(mage, 10, 20, UID), set_component(UID, energy, 0), c(UID, event_c_unit_start_abil, morph_bear).
+%@ UID = 0,
+%@ next_e(3),
+%@ c(0,energy,0),
+%@ c(0,position,10-20),
+%@ c(0,abils,[1,2]),
+%@ c(2,owner_id,0),
+%@ c(2,cooldown,0),
+%@ c(2,template,morph_bear),
+%@ c(2,class,c_abil_morph),
+%@ c(1,owner_id,0),
+%@ c(1,template,keyboard_move),
+%@ c(1,class,c_abil_keyboard_move),
+%@ c(0,speed,5),
+%@ c(0,energy_max,100),
+%@ c(0,life_max,100),
+%@ c(0,life,100),
+%@ c(0,bounds,1),
+%@ c(0,template,mage).
+
+
+%% ?- next_e(0), create_unit(mage_dup_abils, 10, 20, UID).
+%@ UID = 0,
+%@ next_e(4),
+%@ c(0,position,10-20),
+%@ c(0,abils,[1,2,3]),
+%@ c(3,owner_id,0),
+%@ c(3,cooldown,0),
+%@ c(3,template,morph_bear),
+%@ c(3,class,c_abil_morph),
+%@ c(2,owner_id,0),
+%@ c(2,cooldown,0),
+%@ c(2,template,morph_bear),
+%@ c(2,class,c_abil_morph),
+%@ c(1,owner_id,0),
+%@ c(1,template,keyboard_move),
+%@ c(1,class,c_abil_keyboard_move),
+%@ c(0,speed,5),
+%@ c(0,energy_max,100),
+%@ c(0,energy,100),
+%@ c(0,life_max,100),
+%@ c(0,life,100),
+%@ c(0,bounds,1),
+%@ c(0,template,mage_dup_abils).
+
+%% ?- next_e(0), create_unit(mage_dup_abils, 10, 20, UID), c(UID, event_c_unit_start_abil, morph_bear).
+%@ UID = 0,
+%@ next_e(5),
+%@ c(3,cooldown,10), % start abil 3
+%@ c(0,energy,0.0),
+%@ c(0,life,500),
+%@ c(0,abils,[4]),
+%@ c(4,owner_id,0),
+%@ c(4,cooldown,0),
+%@ c(4,template,move),
+%@ c(4,class,c_abil_move),
+%@ c(0,speed,7),
+%@ c(0,energy_max,0),
+%@ c(0,life_max,500),
+%@ c(0,bounds,2),
+%@ c(0,template,bear),
+%@ c(0,position,10-20),
+%@ c(3,owner_id,0),
+%@ c(3,template,morph_bear),
+%@ c(3,class,c_abil_morph),
+%@ c(2,owner_id,0),
+%@ c(2,cooldown,0),
+%@ c(2,template,morph_bear),
+%@ c(2,class,c_abil_morph),
+%@ c(1,owner_id,0),
+%@ c(1,template,keyboard_move),
+%@ c(1,class,c_abil_keyboard_move),
+%@ c(0,template,mage_dup_abils).
+
+%% ?- next_e(0), create_unit(mage_dup_abils, 10, 20, UID), set_component(3, cooldown, 5), c(UID, event_c_unit_start_abil, morph_bear).
+%@ UID = 0,
+%@ next_e(5),
+%@ c(2,cooldown,10), % start abil 2, because abil 3 cooldown is not ready
+%@ c(0,energy,0.0),
+%@ c(0,life,500),
+%@ c(0,abils,[4]),
+%@ c(4,owner_id,0),
+%@ c(4,cooldown,0),
+%@ c(4,template,move),
+%@ c(4,class,c_abil_move),
+%@ c(0,speed,7),
+%@ c(0,energy_max,0),
+%@ c(0,life_max,500),
+%@ c(0,bounds,2),
+%@ c(0,template,bear),
+%@ c(3,cooldown,5),
+%@ c(0,position,10-20),
+%@ c(3,owner_id,0),
+%@ c(3,template,morph_bear),
+%@ c(3,class,c_abil_morph),
+%@ c(2,owner_id,0),
+%@ c(2,template,morph_bear),
+%@ c(2,class,c_abil_morph),
+%@ c(1,owner_id,0),
+%@ c(1,template,keyboard_move),
+%@ c(1,class,c_abil_keyboard_move),
+%@ c(0,template,mage_dup_abils).
+
+%% ?- next_e(0), create_unit(mage_dup_abils, 10, 20, UID), set_component(2, cooldown, 5), c(UID, event_c_unit_start_abil, morph_bear).
+%@ UID = 0,
+%@ next_e(5),
+%@ c(3,cooldown,10),
+%@ c(0,energy,0.0),
+%@ c(0,life,500),
+%@ c(0,abils,[4]),
+%@ c(4,owner_id,0),
+%@ c(4,cooldown,0),
+%@ c(4,template,move),
+%@ c(4,class,c_abil_move),
+%@ c(0,speed,7),
+%@ c(0,energy_max,0),
+%@ c(0,life_max,500),
+%@ c(0,bounds,2),
+%@ c(0,template,bear),
+%@ c(2,cooldown,5),
+%@ c(0,position,10-20),
+%@ c(3,owner_id,0),
+%@ c(3,template,morph_bear),
+%@ c(3,class,c_abil_morph),
+%@ c(2,owner_id,0),
+%@ c(2,template,morph_bear),
+%@ c(2,class,c_abil_morph),
+%@ c(1,owner_id,0),
+%@ c(1,template,keyboard_move),
+%@ c(1,class,c_abil_keyboard_move),
+%@ c(0,template,mage_dup_abils).
+
+
+
+
+
+
+%@ 000 
+%@ false.
+
+%@ false.
+
+
+%@ UID = 0,
+%@ next_e(3),
+%@ c(2,event_c_abil_morph_execute),
+%@ c(0,position,10-20),
+%@ c(0,abils,[1,2]),
+%@ c(2,owner_id,0),
+%@ c(2,cooldown,0),
+%@ c(2,template,morph_bear),
+%@ c(2,class,c_abil_morph),
+%@ c(1,owner_id,0),
+%@ c(1,template,keyboard_move),
+%@ c(1,class,c_abil_keyboard_move),
+%@ c(0,speed,5),
+%@ c(0,energy_max,100),
+%@ c(0,energy,100),
+%@ c(0,life_max,100),
+%@ c(0,life,100),
+%@ c(0,bounds,1),
+%@ c(0,template,mage).
+
+
+%@ false.
+%@ false.
+%@ UID = 0,
+%@ next_e(3),
+%@ c(2,event_c_abil_morph_execute),
+%@ c(0,position,10-20),
+%@ c(0,abils,[1,2]),
+%@ c(2,owner_id,0),
+%@ c(2,cooldown,0),
+%@ c(2,template,morph_bear),
+%@ c(2,class,c_abil_morph),
+%@ c(1,owner_id,0),
+%@ c(1,template,keyboard_move),
+%@ c(1,class,c_abil_keyboard_move),
+%@ c(0,speed,5),
+%@ c(0,energy_max,100),
+%@ c(0,energy,100),
+%@ c(0,life_max,100),
+%@ c(0,life,100),
+%@ c(0,bounds,1),
+%@ c(0,template,mage).
+
+
+
+
+
+
 
 
 %% ?- next_e(0),

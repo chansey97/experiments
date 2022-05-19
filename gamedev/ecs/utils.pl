@@ -34,9 +34,7 @@ get_components(EID, Cs) <=> collect_c(Cs).
 collect_c(Cs), one_c(C) # passive <=> Cs = [C|Cs1], collect_c(Cs1).
 collect_c(Cs) <=> Cs=[].
 
-set_component(EID, N, V) :-
-  remove_component(EID, N),
-  c(EID, N, V).
+set_component(EID, N, V) <=> remove_component(EID, N), c(EID, N, V).
 
 %% TODO: Assuming there is no multiple values components, but it should be taken into account.
 %% e.g. abils which should be use multiple components instead of one component with a list value.
@@ -55,11 +53,9 @@ add_template_components(AID, c_abil_keyboard_attack, Template) <=>
   c(AID, template, Template).
 
 add_template_components(AID, c_abil_move, Template) <=>
-  c(AID, class, c_abil_move),  
+  c(AID, class, c_abil_move),
   c(AID, template, Template),
-  template_field_value_get(Template, cooldown, Cooldown),
-  c(AID, cooldown, 0),
-  c(AID, cooldown_max, Cooldown).
+  c(AID, cooldown, 0).
 
 add_template_components(AID, c_abil_attack,Template) <=>
   c(AID, class, c_abil_attack),  
@@ -68,12 +64,8 @@ add_template_components(AID, c_abil_attack,Template) <=>
 add_template_components(AID, c_abil_morph, Template) <=>
   c(AID, class, c_abil_morph),  
   c(AID, template, Template),
-  template_field_value_get(Template, energy, Energy),
-  template_field_value_get(Template, cooldown, Cooldown),  
-  %% TODO: morphing time and stages?  
-  c(AID, energy, Energy),
-  c(AID, cooldown, 0),
-  c(AID, cooldown_max, Cooldown).
+  %% TODO: morphing time and stages?
+  c(AID, cooldown, 0).
 
 %% Unit
 add_template_components(UID, c_unit, Template) <=>
