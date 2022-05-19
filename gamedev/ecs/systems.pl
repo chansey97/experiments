@@ -87,45 +87,6 @@ event_c_abil_morph_execute @
     set_component(AID, cooldown, CostCooldown).
 
 
-
-
-%% abil_morph_start @
-%%   c(UID, abils, AIDs) # passive,
-%%   c(UID, energy, Energy) # passive,
-%%   c(AID, class, c_abil_morph) # passive,
-%%   c(AID, energy, CostEnergy) # passive
-%%   c(AID, cooldown, CostCooldown) #passive
-%%   \
-%%   c(UID, abil_start, Template)
-%%   <=>
-%%     % TODO: not efficient    
-%%     memberchk(AID, AIDs), 
-%%     Energy >= CostEnergy
-%%     |
-%%     format("abil_morph_start 111 ~n"),
-%%     Energy2 is Energy - CostEnergy,
-%%     format("abil_morph_start 222 ~n"),    
-%%     set_component(UID, energy, Energy2),
-%%     format("abil_morph_start 333 ~n"),    
-%%     c(UID, abil_execute, abil_morph, Template, _).
-
-%% abil_morph_execute @
-%%   c(UID, energy, Energy) #passive,
-%%   c(UID, energy_max, EnergyMax) #passive,  
-%%   c(UID, life, Life) #passive,
-%%   c(UID, life_max, LifeMax) #passive
-%%   \
-%%   c(UID, abil_execute, abil_morph, AbilTemplate, _)
-%%   <=>
-%%     template_abil(AbilTemplate, template, TemplateDst), !,
-%%     template_unit(TemplateDst, life_max, LifeMaxDst), !,
-%%     template_unit(TemplateDst, energy_max, EnergyMaxDst), !,   
-%%     Life2 is (Life / LifeMax)*LifeMaxDst,    
-%%     Energy2 is (Energy / EnergyMax)*EnergyMaxDst,    
-%%     replace_unit_template_components(UID, TemplateDst),   
-%%     set_component(UID, life, Life2), 
-%%     set_component(UID, energy, Energy2).
-
 %% movement_system @ update(move, FID), c(EID, velocity, V) #passive \ c(EID, position, X-Y) #passive <=>
 %%   random(-1.0,1.0,Rand),
 %%   X2 is X+Rand*V,
