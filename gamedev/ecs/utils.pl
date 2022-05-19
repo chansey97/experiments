@@ -1,13 +1,14 @@
 /* Template Class */
 
+sub_class(c_unit, c_unit).
+
 sub_class(c_abil, c_abil).
 sub_class(c_abil_keyboard_move, c_abil).
 sub_class(c_abil_keyboard_attack, c_abil).
 sub_class(c_abil_move, c_abil).
 sub_class(c_abil_attak, c_abil).
 sub_class(c_abil_morph, c_abil).
- 
-sub_class(c_unit, c_unit).
+
 
 is_sub_class_of(X,Y) :- sub_class(X,Y).
 is_sub_class_of(X,Y) :- sub_class(X,Z), is_sub_class_of(Z,Y).
@@ -43,30 +44,6 @@ remove_component(EID, N), c(EID, N, _) # passive <=> true.
 
 /* Entities */
 
-%% Abil
-add_template_components(AID, c_abil_keyboard_move, Template) <=>
-  c(AID, class, c_abil_keyboard_move),  
-  c(AID, template, Template).
-
-add_template_components(AID, c_abil_keyboard_attack, Template) <=>
-  c(AID, class, c_abil_keyboard_attack),  
-  c(AID, template, Template).
-
-add_template_components(AID, c_abil_move, Template) <=>
-  c(AID, class, c_abil_move),
-  c(AID, template, Template),
-  c(AID, cooldown, 0).
-
-add_template_components(AID, c_abil_attack,Template) <=>
-  c(AID, class, c_abil_attack),  
-  c(AID, template, Template).
-
-add_template_components(AID, c_abil_morph, Template) <=>
-  c(AID, class, c_abil_morph),  
-  c(AID, template, Template),
-  %% TODO: morphing time and stages?
-  c(AID, cooldown, 0).
-
 %% Unit
 add_template_components(UID, c_unit, Template) <=>
   c(UID, template, Template),
@@ -96,12 +73,29 @@ remove_template_components(UID, c_unit) \ c(UID, speed, V) # passive <=> true.
 remove_template_components(UID, c_unit) \ c(UID, abils, V) # passive <=> true.
 remove_template_components(UID, c_unit) <=> true.
 
-create_abil(Template, OwnerID, EID), next_e(ID) # passive <=>
-  EID=ID,
-  NextID is ID+1, next_e(NextID),
-  template_field_value_get(Template, class, Class),
-  add_template_components(EID, Class, Template),  
-  c(EID, owner_id, OwnerID).
+%% Abil
+add_template_components(AID, c_abil_keyboard_move, Template) <=>
+  c(AID, class, c_abil_keyboard_move),  
+  c(AID, template, Template).
+
+add_template_components(AID, c_abil_keyboard_attack, Template) <=>
+  c(AID, class, c_abil_keyboard_attack),  
+  c(AID, template, Template).
+
+add_template_components(AID, c_abil_move, Template) <=>
+  c(AID, class, c_abil_move),
+  c(AID, template, Template),
+  c(AID, cooldown, 0).
+
+add_template_components(AID, c_abil_attack,Template) <=>
+  c(AID, class, c_abil_attack),  
+  c(AID, template, Template).
+
+add_template_components(AID, c_abil_morph, Template) <=>
+  c(AID, class, c_abil_morph),  
+  c(AID, template, Template),
+  %% TODO: morphing time and stages?
+  c(AID, cooldown, 0).
 
 create_unit(Template, X, Y, EID), next_e(ID) # passive <=>
   EID=ID,
@@ -110,6 +104,13 @@ create_unit(Template, X, Y, EID), next_e(ID) # passive <=>
   add_template_components(EID, Class, Template),
   c(EID, position, X-Y).
 
+create_abil(Template, OwnerID, EID), next_e(ID) # passive <=>
+  EID=ID,
+  NextID is ID+1, next_e(NextID),
+  template_field_value_get(Template, class, Class),
+  add_template_components(EID, Class, Template),  
+  c(EID, owner_id, OwnerID).
+
 create_player(PID, EID), next_e(ID) # passive <=>
   EID=ID,
   NextID is ID+1, next_e(NextID),
@@ -117,5 +118,4 @@ create_player(PID, EID), next_e(ID) # passive <=>
 
 player_control_unit(PID, EID), c(EIDPlayer, player, PID) # passive, c(EID, template, _) # passive ==> 
   c(EIDPlayer, player_control, EID).
-
 

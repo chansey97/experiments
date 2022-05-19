@@ -3,6 +3,18 @@
 
 /* Core Templates */
 
+%% Units
+
+%% t_unit
+template(t_unit, class, c_unit).
+template(t_unit, bounds, 1).
+template(t_unit, life_starting, 100).
+template(t_unit, life_max, 100).
+template(t_unit, energy_starting, 100).
+template(t_unit, energy_max, 100).
+template(t_unit, speed, 0).
+template(t_unit, abils, []).
+
 %% Abils
 
 %% t_abil_keyboard_move
@@ -26,39 +38,7 @@ template(t_abil_morph, cost_energy, 50).
 template(t_abil_morph, cost_cooldown, 10).
 template(t_abil_morph, template, unknown).
 
-%% Units
-
-%% t_unit
-template(t_unit, class, c_unit).
-template(t_unit, bounds, 1).
-template(t_unit, life_starting, 100).
-template(t_unit, life_max, 100).
-template(t_unit, energy_starting, 100).
-template(t_unit, energy_max, 100).
-template(t_unit, speed, 0).
-template(t_unit, abils, []).
-
 /* Specific Game Templates */
-
-%% Abils
-
-%% keyboard_move
-template(keyboard_move, class, c_abil_keyboard_move).
-template(keyboard_move, parent, t_abil_keyboard_move).
-
-%% move
-template(move, class, c_abil_move).
-template(move, parent, t_abil_move).
-
-%% attack
-template(attack, class, c_abil_attack).
-template(attack, parent, t_abil_attack).
-
-%% morph_bear
-template(morph_bear, class, c_abil_morph).
-template(morph_bear, parent, t_abil_morph).
-template(morph_bear, template, bear).
-
 
 %% Units
 
@@ -91,3 +71,22 @@ template(tree, parent, t_unit).
 template(tree, energy_starting, 0).
 template(tree, energy_max, 0).
 
+
+%% Abils
+
+%% keyboard_move
+template(keyboard_move, class, c_abil_keyboard_move).
+template(keyboard_move, parent, t_abil_keyboard_move).
+
+%% move
+template(move, class, c_abil_move).
+template(move, parent, t_abil_move).
+
+%% attack
+template(attack, class, c_abil_attack).
+template(attack, parent, t_abil_attack).
+
+%% morph_bear
+template(morph_bear, class, c_abil_morph).
+template(morph_bear, parent, t_abil_morph).
+template(morph_bear, template, bear).
