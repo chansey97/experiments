@@ -37,7 +37,7 @@ event_c_abil_check @
   c(AID, template, Template) # passive,
   c(AID, owner_id, UID) # passive
   ==>
-    true % alway true, because c_abil no limit
+    true % alway true, because c_abil no limit currently
     |
     c(AID, event_c_abil_morph_check).
 
