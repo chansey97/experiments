@@ -14,6 +14,7 @@ template(t_unit, energy_starting, 100).
 template(t_unit, energy_max, 100).
 template(t_unit, speed, 0).
 template(t_unit, abils, []).
+template(t_unit, weapons, []).
 
 %% Abils
 
@@ -37,6 +38,42 @@ template(t_abil_morph, class, c_abil_morph).
 template(t_abil_morph, cost_energy, 50).
 template(t_abil_morph, cost_cooldown, 10).
 template(t_abil_morph, template, unknown).
+
+template(t_abil_effect, class, c_abil_effect).
+template(t_abil_effect, cost_energy, 50).
+template(t_abil_effect, cost_cooldown, 10).
+template(t_abil_effect, effects, []).
+
+template(t_abil_effect_instant, class, c_abil_effect_instant).
+template(t_abil_effect_instant, parent, t_abil_effect).
+
+template(t_abil_effect_target, class, c_abil_effect_target).
+template(t_abil_effect_target, parent, t_abil_effect).
+
+%% Weapons
+
+template(t_weapon_legacy, class, c_weapon_legacy).
+template(t_weapon_legacy, arc, 11.25).
+template(t_weapon_legacy, range, 0.4).
+template(t_weapon_legacy, period, 22).
+template(t_weapon_legacy, damage_point, 3).
+template(t_weapon_legacy, backswing, 2).
+template(t_weapon_legacy, effect, unknown).
+
+%% Effects
+
+%% t_effect_damage
+template(t_effect_damage, class, c_effect_damage).
+template(t_effect_damage, amount, 10).
+
+%% t_effect_lanuch_missile
+template(t_effect_launch_missile, class, c_effect_lanuch_missile).
+template(t_effect_launch_missile, ammo_unit, unknown).
+
+%% t_effect_modify_unit
+template(t_effect_modify_unit, class, c_effect_modify_unit).
+template(t_effect_modify_unit, life, s_effect_modify_vital(change:0, change_fraction:0)).
+template(t_effect_modify_unit, energy, s_effect_modify_vital(change:0, change_fraction:0)).
 
 /* Specific Game Templates */
 
@@ -64,6 +101,7 @@ template(bear, energy_starting, 0).
 template(bear, energy_max, 0).
 template(bear, speed, 7).
 template(bear, abils, [move]).
+template(bear, weapons, [bear_claws]).
 
 %% tree
 template(tree, class, c_unit).
@@ -90,3 +128,25 @@ template(attack, parent, t_abil_attack).
 template(morph_bear, class, c_abil_morph).
 template(morph_bear, parent, t_abil_morph).
 template(morph_bear, template, bear).
+
+%% self_heal
+template(self_heal, class, c_abil_effect_instant).
+template(self_heal, parent, t_abil_effect_instant).
+template(self_heal, effects, []).
+
+%% Weapons
+
+template(bear_claws, class, c_weapon_legacy).
+template(bear_claws, parent, t_weapon_legacy).
+template(bear_claws, effect, bear_claws_damage).
+
+%% Effects
+
+template(bear_claws_damage, class, c_effect_damage).
+template(bear_claws_damage, parent, t_effect_damage).
+template(bear_claws_damage, amount, 8).
+
+template(self_heal, class, c_effect_modify_unit).
+template(self_heal, parent, t_effect_modify_unit).
+template(self_heal, life, modify(change:100, change_fraction:0)).
+

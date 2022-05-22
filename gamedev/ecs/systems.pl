@@ -7,59 +7,79 @@ input_system @ update(input, FID), c(_, player_control, UID) #passive ==>
   format("update(input, FID=~w) ", [FID]),
   (   S="a\n"
       %% TODO: c/5 can be used for trigger
-  ->  c(UID, event_c_unit_start_abil, morph_bear) % assuming morph is a instant ability, so no cast system update needed
+  ->  c(UID, event_unit_start_abil, morph_bear) % assuming morph is a instant ability, so no cast system update needed
   ;   true   
   ).
 input_system @ update(input, FID) <=> true.
 
 
-%% abil execute workflow
-%% event_c_unit_start_abil -> event_c_abil_check -> event_c_abil_morph_check -> -> event_c_abil_morph_execute
+%% Abil execute workflow:
+
+%% event_unit_start_abil
+%% -> event_abil_check
+%% -> event_abil_morph_check
+%% -> event_abil_morph_execute
+
+%% event_unit_start_abil
+%% -> event_abil_check
+%% -> event_abil_effect_check
+%% -> event_abil_effect_instant_check
+%% -> event_abil_effect_instant_execute
+
 
 %% TODO:
 %% If a abil requrie a target, the target will be a component of abil entity
 
-%% c_unit_start_abil
-event_c_unit_start_abil @
-  c(UID, event_c_unit_start_abil, Template),
+%% event_unit_start_abil
+event_unit_start_abil @
   c(UID, abils, AIDs) # passive,
   c(AID, template, Template) # passive
-  ==>
-    memberchk(AID, AIDs)
-    |  
-    c(AID, event_c_abil_check).
+  \
+  c(UID, event_unit_start_abil, Template)  
+  <=>
+    memberchk(AID, AIDs),
+    template_class_get(Template, Class),
+    c(AID, event_abil_check, Class)
+    |
+    c(AID, event_abil_execute, Class).
 
-event_c_unit_start_abil @ c(_, event_c_unit_start_abil, _) <=> true.
+event_unit_start_abil @ c(AID, event_unit_start_abil, Class) <=> true.
 
 %% c_abil
-event_c_abil_check @
-  c(AID, event_c_abil_check),
-  c(AID, template, Template) # passive,
-  c(AID, owner_id, UID) # passive
-  ==>
-    true % alway true, because c_abil no limit currently
-    |
-    c(AID, event_c_abil_morph_check).
+event_abil_check @
+  c(AID, event_abil_check, c_abil)
+  <=>  
+    true.
 
-event_c_abil_check @ c(_, event_c_abil_check) <=> true.
+event_abil_check @ c(AID, event_abil_check, c_abil) <=> false.
+
+event_abil_execute @
+  c(AID, event_abil_execute, c_abil)
+  <=>
+    true.
+
+event_abil_execute @ c(AID, event_abil_check, c_abil) <=> true.
 
 %% c_abil_morph
-event_c_abil_morph_check @
-  c(AID, event_c_abil_morph_check),
+event_abil_check @
   c(AID, template, Template) # passive,
   c(AID, owner_id, UID) # passive,
   c(AID, cooldown, Cooldown) # passive,
   c(UID, energy, Energy) #passive
-  ==>
+  \
+  c(AID, event_abil_check, c_abil_morph)  
+  <=>
+    sub_class(c_abil_morph, SuperClass),
+    c(AID, event_abil_check, SuperClass),
     template_field_value_get(Template, cost_energy, CostEnergy),
     Energy >= CostEnergy,
     Cooldown =:= 0
     |
-    c(AID, event_c_abil_morph_execute).
+    true.
 
-event_c_abil_morph_check @ c(_, event_c_abil_morph_check) <=> true.
+event_abil_check @ c(AID, event_abil_check, c_abil_morph) <=> false.
 
-event_c_abil_morph_execute @
+event_abil_execute @
   c(AID, template, AbilTemplate) # passive,
   c(AID, owner_id, UID) # passive,
   c(AID, cooldown, Cooldown) # passive,
@@ -69,7 +89,7 @@ event_c_abil_morph_execute @
   c(UID, life, Life) #passive,
   c(UID, life_max, LifeMax) #passive
   \
-  c(AID, event_c_abil_morph_execute)
+  c(AID, event_abil_execute, c_abil_morph)
   <=>
     template_field_value_get(UnitTemplate, class, UnitClass),
     template_field_value_get(AbilTemplate, cost_energy, CostEnergy),
@@ -85,6 +105,66 @@ event_c_abil_morph_execute @
     set_component(UID, life, Life2), 
     set_component(UID, energy, Energy2),
     set_component(AID, cooldown, CostCooldown).
+
+event_abil_execute @ c(AID, event_abil_execute, c_abil_morph) <=> true.
+
+%% c_abil_effect
+event_abil_check @
+  c(AID, template, Template) # passive,
+  c(AID, owner_id, UID) # passive,
+  c(AID, cooldown, Cooldown) # passive,
+  c(UID, energy, Energy) #passive
+  \
+  c(AID, event_abil_check, c_abil_effect)    
+  <=>
+    sub_class(c_abil_effect, SuperClass),
+    c(AID, event_abil_check, SuperClass),
+    template_field_value_get(Template, cost_energy, CostEnergy),
+    Energy >= CostEnergy,
+    Cooldown =:= 0
+    |
+    true.
+
+event_abil_check @ c(AID, event_abil_check, c_abil_effect)  <=> false.
+
+event_abil_execute @
+  c(AID, template, AbilTemplate) # passive,
+  c(AID, owner_id, UID) # passive,
+  c(AID, cooldown, Cooldown) # passive,
+  c(UID, energy, Energy) #passive
+  \
+  c(AID, event_abil_execute, c_abil_effect)
+  <=>
+    template_field_value_get(AbilTemplate, cost_energy, CostEnergy),
+    template_field_value_get(AbilTemplate, cost_cooldown, CostCooldown),    
+    Energy2 is Energy - CostEnergy,
+    set_component(UID, energy, Energy2),
+    set_component(AID, cooldown, CostCooldown).
+
+event_abil_execute @ c(AID, event_abil_execute, c_abil_effect) <=> true.
+
+%% c_abil_effect_instant
+event_abil_check @
+  c(AID, event_abil_check, c_abil_effect_instant)
+  <=>
+    sub_class(c_abil_effect, SuperClass),
+    c(AID, event_abil_check, SuperClass)
+    |
+    true.
+
+event_abil_check @ c(_, event_abil_check, c_abil_effect_instant) <=> false.
+
+event_abil_execute @
+  c(AID, template, Template) # passive,
+  c(AID, owner_id, UID) # passive
+  \  
+  c(AID, event_abil_execute, c_abil_effect_instant)
+  <=>
+    %% create effect    
+    c(AID, event_abil_execute, c_abil_effect).
+
+event_abil_execute @ c(AID, event_abil_execute, c_abil_effect_instant) <=> true.
+
 
 
 %% movement_system @ update(move, FID), c(EID, velocity, V) #passive \ c(EID, position, X-Y) #passive <=>

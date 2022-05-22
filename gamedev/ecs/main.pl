@@ -24,11 +24,13 @@
 
   add_template_components/3,
   remove_template_components/2,
-
-  create_abil/3,
+  
   create_unit/4,
+  create_abil/3,
+  create_weapon/3,
+  create_effect/4,
+  create_point/3,  
   create_player/2,
-
   player_control_unit/2
   .
 
@@ -45,8 +47,17 @@ ps.
 
 %% /* Main */
 
-%% ?- 
+%% ?- is_sub_class_of(c_abil_effect_instant, c_abil).
+%@ true.
 
+%% ?- is_sub_class_of(c_abil_effect_instant, c_abil_effect).
+%@ true.
+
+%% ?- is_sub_class_of(c_abil_effect_instant, c_abil_effect_instant).
+%@ true.
+
+%% ?- is_sub_class_of(c_abil_effect_instant, c_abil_effect_target).
+%@ false.
 
 %% world_init :-
 %%   next_e(0),
