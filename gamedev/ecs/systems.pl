@@ -15,15 +15,12 @@ input_system @ update(input, FID) <=> true.
 
 %% Abil execute workflow:
 
-%% event_unit_start_abil
-%% -> event_abil_check
-%% -> event_abil_morph_check
+%% event_unit_start_abil with c_abil_morph
+%% -> event_abil_morph_check -> event_abil_check
 %% -> event_abil_morph_execute
 
-%% event_unit_start_abil
-%% -> event_abil_check
-%% -> event_abil_effect_check
-%% -> event_abil_effect_instant_check
+%% event_unit_start_abil with c_abil_effect_instant
+%% -> event_abil_effect_instant_check -> event_abil_effect_check -> event_abil_check
 %% -> event_abil_effect_instant_execute
 
 
