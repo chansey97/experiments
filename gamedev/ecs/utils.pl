@@ -62,6 +62,7 @@ add_template_components(UID, c_unit, Template) <=>
   template_field_value_get(Template, energy_max, EnergyMax),
   template_field_value_get(Template, speed, Speed),
   template_field_value_get(Template, abils, Abils),
+  template_field_value_get(Template, weapons, Weapons),  
   c(UID, bounds, Bounds),
   c(UID, life, LifeStarting),
   c(UID, life_max, LifeMax),
@@ -72,7 +73,7 @@ add_template_components(UID, c_unit, Template) <=>
   maplist({UID}/[A, AID]>>create_abil(A, UID, AID), Abils, AIDs),
   c(UID, abils, AIDs),
   %% weapons
-  maplist({UID}/[W, WID]>>create_weapon(W, UID, WID), Wbils, WIDs),
+  maplist({UID}/[W, WID]>>create_weapon(W, UID, WID), Weapons, WIDs),
   c(UID, weapons, WIDs).
 
 remove_template_components(UID, c_unit) \ c(UID, bounds, V) # passive <=> true.
@@ -128,6 +129,11 @@ add_template_components(EffID, t_effect_modify_unit, Template) <=>
   c(EffID, template, Template).
 
 %% Entities Interfaces
+
+%% TODO:
+%% Should we use event_unit_create? like event_unit_abil_start?
+%% which means that, the logic of create unit can be in system instead of utils?
+%% The advantage is that create unit can be the same as create effect (some of the effect will execute instant!)  
 
 %% Unit
 create_unit(Template, X, Y, EID), next_e(ID) # passive <=>

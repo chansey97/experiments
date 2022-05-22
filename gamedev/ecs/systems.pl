@@ -152,12 +152,13 @@ event_abil_check @
 event_abil_check @ c(_, event_abil_check, c_abil_effect_instant) <=> false.
 
 event_abil_execute @
-  c(AID, template, Template) # passive,
+  c(AID, template, AbilTemplate) # passive,
   c(AID, owner_id, UID) # passive
   \  
   c(AID, event_abil_execute, c_abil_effect_instant)
   <=>
-    %% create effect    
+    template_field_value_get(AbilTemplate, effects, Effs),
+    maplist({UID}/[Eff, EffID]>>create_effect(Eff, UID, UID, EffID), Effs, EffIDs),
     c(AID, event_abil_execute, c_abil_effect).
 
 event_abil_execute @ c(AID, event_abil_execute, c_abil_effect_instant) <=> true.
