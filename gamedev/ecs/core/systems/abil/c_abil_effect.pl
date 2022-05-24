@@ -2,7 +2,7 @@
 c_abil_effect_create @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_create, c_abil_effect)
+c(EID, event_abil_create, c_abil_effect)
 <=>
   c(EID, cooldown, 0).
 
@@ -10,7 +10,7 @@ c(EID, event_entity_create, c_abil_effect)
 c_abil_effect_destroy @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_destroy, c_abil_effect)
+c(EID, event_abil_destroy, c_abil_effect)
 <=>
   remove_component(EID, cooldown).
 

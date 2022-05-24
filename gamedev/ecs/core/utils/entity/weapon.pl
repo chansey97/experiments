@@ -7,14 +7,14 @@ create_weapon(Template, OwnerID, EID), next_e(ID) # passive <=>
   c(EID, class, Class),  
   c(EID, template, Template),
   c(EID, owner_id, OwnerID),  
-  c(EID, event_entity_create, Class).
+  c(EID, event_weapon_create, Class).
 
 destroy_weapon @
 c(EID, type, weapon) # passive,
 c(EID, class, Class) # passive
 \
 destroy_weapon(EID) <=>
-  c(EID, event_entity_destroy),
+  c(EID, event_weapon_destroy, Class),
   remove_component(EID, type),
   remove_component(EID, class),
   remove_component(EID, template),

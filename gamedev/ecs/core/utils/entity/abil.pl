@@ -7,7 +7,7 @@ create_abil(Template, OwnerID, EID), next_e(ID) # passive <=>
   c(EID, class, Class),
   c(EID, template, Template),  
   c(EID, owner_id, OwnerID),
-  c(EID, event_entity_create, Class).
+  c(EID, event_abil_create, Class).
 
 destory_abil @
 c(EID, type, abil) # passive,
@@ -15,7 +15,7 @@ c(EID, class, Class) # passive
 \
 destroy_abil(EID)
 <=>
-  c(EID, event_entity_destroy, Class),
+  c(EID, event_abil_destroy, Class),
   remove_component(EID, type),
   remove_component(EID, class),
   remove_component(EID, template),

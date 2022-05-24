@@ -1,7 +1,7 @@
 c_unit_create @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_create, c_unit)
+c(EID, event_unit_create, c_unit)
 <=>
   template_field_value_get(unit, Template, bounds, Bounds),
   template_field_value_get(unit, Template, life_starting, LifeStarting),  
@@ -30,7 +30,7 @@ c(EID, template, Template) # passive,
 c(EID, abils, Abils) # passive,
 c(EID, weapons, Weapons) # passive
 \
-c(EID, event_entity_destroy, c_unit)
+c(EID, event_unit_destroy, c_unit)
 <=>
   remove_component(EID, bounds),
   remove_component(EID, life),

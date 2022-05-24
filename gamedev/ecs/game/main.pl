@@ -219,6 +219,7 @@
 %@ c(0,player_no,1),
 %@ c(0,type,player).
 
+
 %% ?- next_e(0),
 %%    create_player(1, PID),
 %%    create_unit(mage, 10, 20, 1, UID),
@@ -334,7 +335,6 @@
 %@ c(0,type,player).
 
 
-
 %% duplicate ability, 4 and 5,
 %% if abil 4 cooldown is not ready, use 5
 
@@ -381,7 +381,6 @@
 %@ c(1,type,unit),
 %@ c(0,player_no,1),
 %@ c(0,type,player).
-
 
 %% duplicate ability, 4 and 5,
 %% if abil 5 cooldown is not ready, use 4

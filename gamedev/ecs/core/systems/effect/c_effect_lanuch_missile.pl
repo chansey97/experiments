@@ -2,7 +2,7 @@
 c_effect_launch_missile_create @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_create, c_effect_launch_missile)
+c(EID, event_effect_create, c_effect_launch_missile)
 <=>
   c(EID, event_effect_start, c_effect_launch_missile).
 
@@ -10,7 +10,7 @@ c(EID, event_entity_create, c_effect_launch_missile)
 c_effect_launch_missile_destroy @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_destroy, c_effect_launch_missile)
+c(EID, event_effect_destroy, c_effect_launch_missile)
 <=> true.
 
 %% N.B.

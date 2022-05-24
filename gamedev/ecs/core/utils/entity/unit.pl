@@ -8,7 +8,7 @@ create_unit(Template, X, Y, PlayerNo, EID), next_e(ID) # passive <=>
   c(EID, template, Template),
   c(EID, position, X-Y),
   c(EID, player_no, PlayerNo),
-  c(EID, event_entity_create, Class). %% TODO: Use event_unit_create instead of event_entity_create
+  c(EID, event_unit_create, Class).
 
 destory_unit @
 c(EID, type, unit) # passive,
@@ -16,7 +16,7 @@ c(EID, class, Class) # passive
 \
 destroy_unit(EID)
 <=>
-  c(EID, event_entity_destroy, Class),
+  c(EID, event_unit_destroy, Class),
   remove_component(EID, type),
   remove_component(EID, class),
   remove_component(EID, template),

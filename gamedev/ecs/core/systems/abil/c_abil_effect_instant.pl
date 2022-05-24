@@ -2,19 +2,19 @@
 c_abil_effect_instant_create @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_create, c_abil_effect_instant)
+c(EID, event_abil_create, c_abil_effect_instant)
 <=>
   sub_class(c_abil_effect_instant, SuperClass),
-  c(EID, event_entity_create, SuperClass).
+  c(EID, event_abil_create, SuperClass).
 
 %% on destroy
 c_abil_effect_instant_destroy @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_destroy, c_abil_effect_instant)
+c(EID, event_abil_destroy, c_abil_effect_instant)
 <=>
   sub_class(c_abil_effect_instant, SuperClass),
-  c(EID, event_entity_destroy, SuperClass).
+  c(EID, event_abil_destroy, SuperClass).
 
 %% on check
 c_abil_effect_instant_check @

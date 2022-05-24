@@ -2,7 +2,7 @@
 c_effect_damage_create @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_create, c_effect_damage)
+c(EID, event_effect_create, c_effect_damage)
 <=>
   c(EID, event_effect_start, c_effect_damage),
   destroy_effect(EID). % transient effect
@@ -11,7 +11,7 @@ c(EID, event_entity_create, c_effect_damage)
 c_effect_damage_destroy @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_destroy, c_effect_damage)
+c(EID, event_effect_destroy, c_effect_damage)
 <=> true.
 
 %% N.B.
@@ -39,21 +39,6 @@ c(EffID, event_effect_start, c_effect_damage)
   Life2 is Life - Amount,  
   set_component(TargetID, life, Life2).
 
-%% TODO: trigger event?
-%% https://www.swi-prolog.org/pldoc/man?section=broadcast
-
-c_effect_damage_start @
-c(EffID, template, Template) # passive,
-c(EffID, caster_id, CasterID) # passive,
-c(EffID, target_id, TargetID) # passive
-%% c(CasterID, type, unit) # passive,
-%% c(TargetID, type, unit) # passive
-\
-c(EffID, event_effect_start, c_effect_damage)
-<=>
-  template_field_value_get(effect, Template, amount, Amount),
-  Life2 is Life - Amount,  
-  set_component(TargetID, life, Life2).
 
 %% TODO: trigger event?
 %% https://www.swi-prolog.org/pldoc/man?section=broadcast

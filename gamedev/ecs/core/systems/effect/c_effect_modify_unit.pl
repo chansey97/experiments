@@ -2,7 +2,7 @@
 c_effect_modify_unit_create @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_create, c_effect_modify_unit)
+c(EID, event_effect_create, c_effect_modify_unit)
 <=>
   c(EID, event_effect_start, c_effect_modify_unit),
   destroy_effect(EID).          % transient effect
@@ -11,7 +11,7 @@ c(EID, event_entity_create, c_effect_modify_unit)
 c_effect_modify_unit_destroy @
 c(EID, template, Template) # passive
 \
-c(EID, event_entity_destroy, c_effect_modify_unit)
+c(EID, event_effect_destroy, c_effect_modify_unit)
 <=>
   true.
 
