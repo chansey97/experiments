@@ -14,8 +14,8 @@ create_template(Catalog, ID, Class, EID), next_e(EID2) # passive <=>
              (   raw_template_field_value_get(Catalog, ID, Name, Value) 
              ->  (   call(Pred, Value)
                  ->  c(EID, Name, Value)
-                 ;   format("create_template faild. Catalog ~w ID ~w.~n", [Catalog, ID]),
-                     format("create_template faild. field ~w's type  ~w and value ~w mismatch. ~n", [Name, Pred, Value]),
+                 ;   format("create_template Failed. Catalog ~w ID ~w.~n", [Catalog, ID]),
+                     format("create_template Failed. The field ~w's type  ~w and value ~w mismatch. ~n", [Name, Pred, Value]),
                      fail
                  )
              ;   c(EID, Name, Default)
