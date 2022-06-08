@@ -6,7 +6,8 @@ class_fields_get(Class, Fields) :-
       ;   class_fields_get(SuperClass, Fields1),
           append(Fields1, Fields0, Fields)
       )
-  ;   format("class_fields_get, class ~w does not exist.~n", [Class])
+  ;   format("class_fields_get, class ~w does not exist.~n", [Class]),
+      fail
   ).
 
 %% ?- class_fields_get(c_abil_effect_target, L).
