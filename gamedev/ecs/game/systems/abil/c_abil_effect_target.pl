@@ -1,4 +1,4 @@
-%% on destroy
+%% on create
 c_abil_effect_target:event_abil_create @
 c(EID, template, Template) # passive
 \
