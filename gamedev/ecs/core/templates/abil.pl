@@ -47,6 +47,5 @@ template(catalog = abil, id = t_abil_morph,
          [class = c_abil_morph],     
          [name = "t_abil_effect_target",
           cost_energy = 0,
-          cost_energy = 0,
           template = null
          ]).
