@@ -21,143 +21,111 @@
   get_components/2, one_c/1, collect_c/1,  
   set_component/3,
   remove_component/2,
-  check_component/3,
+  %% check_component/3,
+  get_component/3,
 
+  %% create_template/2,
+  create_template/4,
+  
   create_unit/5,
   destroy_unit/1,
   replace_unit_template/2,
+  unit_issue_order/2,
   
   create_abil/3,
   destroy_abil/1,
+  abil_check/2,
+  abil_execute/2,
+  abil_cancel/1,  
   
   create_weapon/3,
   destroy_weapon/1,
   
   create_effect/4,
   destroy_effect/1,
-  
-  create_point/3,
-  destroy_point/1,
+
+  %% no need point entity, because it is just a editor preset
+  %% in runtime, it is a point record  
+  %% create_point/3,
+  %% destroy_point/1,
   
   create_player/2,
   destroy_player/1,  
   player_control_unit/2
   .
 
-%% :- discontiguous t/3, t_c/3.
+:- discontiguous class/3, class_field/3.
 
-/* Core */
+%% Classes
+:- include("./core/classes/abil.pl").
+:- include("./core/classes/actor.pl").
+:- include("./core/classes/behavior.pl").
+:- include("./core/classes/effect.pl").
+:- include("./core/classes/unit.pl").
+:- include("./core/classes/weapon.pl").
 
 %% Utils
-:- include("../core/utils/chr.pl").
-:- include("../core/utils/component.pl").
-:- include("../core/utils/class.pl").
-:- include("../core/utils/template.pl").
+:- include("./core/utils/common.pl").
+:- include("./core/utils/chr.pl").
+:- include("./core/utils/component.pl").
+:- include("./core/utils/class.pl").
+:- include("./core/utils/raw_template.pl").
 
-:- include("../core/utils/entity/abil.pl").
-:- include("../core/utils/entity/effect.pl").
-:- include("../core/utils/entity/player.pl").
-:- include("../core/utils/entity/point.pl").
-:- include("../core/utils/entity/unit.pl").
-:- include("../core/utils/entity/weapon.pl").
+:- include("./core/utils/entity/template.pl").
+:- include("./core/utils/entity/abil.pl").
+:- include("./core/utils/entity/effect.pl").
+:- include("./core/utils/entity/player.pl").
+:- include("./core/utils/entity/unit.pl").
+:- include("./core/utils/entity/weapon.pl").
 
 %% Systems
-:- include("../core/systems/input.pl").
+%% :- include("./core/systems/input.pl").
 
-:- include("../core/systems/unit/c_unit.pl").
+%% :- include("./core/systems/unit/c_unit.pl").
 
-:- include("../core/systems/abil/c_abil.pl").
-:- include("../core/systems/abil/c_abil_attack.pl").
-:- include("../core/systems/abil/c_abil_effect.pl").
-:- include("../core/systems/abil/c_abil_effect_instant.pl").
-:- include("../core/systems/abil/c_abil_effect_target.pl").
-:- include("../core/systems/abil/c_abil_keyboard_move.pl").
-:- include("../core/systems/abil/c_abil_morph.pl").
-:- include("../core/systems/abil/c_abil_move.pl").
+%% :- include("./core/systems/abil/c_abil.pl").
+%% :- include("./core/systems/abil/c_abil_attack.pl").
+%% :- include("./core/systems/abil/c_abil_effect.pl").
+%% :- include("./core/systems/abil/c_abil_effect_instant.pl").
+%% :- include("./core/systems/abil/c_abil_effect_target.pl").
+%% :- include("./core/systems/abil/c_abil_keyboard_move.pl").
+%% :- include("./core/systems/abil/c_abil_morph.pl").
+%% :- include("./core/systems/abil/c_abil_move.pl").
 
-:- include("../core/systems/weapon/c_weapon_legacy.pl").
+%% :- include("./core/systems/weapon/c_weapon_legacy.pl").
 
-:- include("../core/systems/effect/c_effect_damage.pl").
-:- include("../core/systems/effect/c_effect_lanuch_missile.pl").
-:- include("../core/systems/effect/c_effect_modify_unit.pl").
+%% :- include("./core/systems/effect/c_effect_damage.pl").
+%% :- include("./core/systems/effect/c_effect_lanuch_missile.pl").
+%% :- include("./core/systems/effect/c_effect_modify_unit.pl").
 
-:- include("../core/systems/behavior/c_behavior_attribute.pl").
-:- include("../core/systems/behavior/c_behavior_buff.pl").
+%% :- include("./core/systems/behavior/c_behavior_attribute.pl").
+%% :- include("./core/systems/behavior/c_behavior_buff.pl").
 
-:- include("../core/systems/mover/c_mover.pl").
-:- include("../core/systems/mover/c_mover_avoid.pl").
+%% :- include("./core/systems/mover/c_mover.pl").
+%% :- include("./core/systems/mover/c_mover_avoid.pl").
 
-:- include("../core/systems/actor/c_actor.pl").
+%% :- include("./core/systems/actor/c_actor.pl").
 
-:- include("../core/systems/render.pl").
+%% :- include("./core/systems/render.pl").
 
-%% Core Templates
-:- include("../core/templates/abil/c_abil.pl").
-:- include("../core/templates/abil/c_abil_attack.pl").
-:- include("../core/templates/abil/c_abil_effect.pl").
-:- include("../core/templates/abil/c_abil_effect_instant.pl").
-:- include("../core/templates/abil/c_abil_effect_target.pl").
-:- include("../core/templates/abil/c_abil_keyboard_move.pl"). % no need c_abil_keyboard_attack, since it can be implemented by c_abil_effect_instant
-:- include("../core/templates/abil/c_abil_morph.pl").
-:- include("../core/templates/abil/c_abil_move.pl").
+%% NOTE:
+%% Only minor changes to support mods.
 
-:- include("../core/templates/actor/c_actor.pl").
+%% TODO:
+%% Since class now has default value, no need use default templates in core.
 
-:- include("../core/templates/effect/c_effect_damage.pl").
-:- include("../core/templates/effect/c_effect_lanuch_missile.pl").
-:- include("../core/templates/effect/c_effect_modify_unit.pl").
+init :-
+  load_raw_templates("./core/templates"),
+  load_raw_templates("./game/templates"),
+  next_e(0).
 
-:- include("../core/templates/unit/c_unit.pl").
+%% ?- init, listing(raw_template), listing(raw_template_field).        
 
-:- include("../core/templates/weapon/c_weapon_legacy.pl").
+%% ?- init, load_templates, chr_listing(_).
 
-/* Game */
 
-%% Templates
-:- include("../game/templates/abil/attack.pl").
-:- include("../game/templates/abil/keyboard_move.pl").
-:- include("../game/templates/abil/morph_bear.pl").
-:- include("../game/templates/abil/move.pl").
-:- include("../game/templates/abil/self_heal.pl").
 
-:- include("../game/templates/actor/bear.pl").
-
-:- include("../game/templates/effect/bear_claws_damage.pl").
-:- include("../game/templates/effect/self_heal.pl").
-
-:- include("../game/templates/unit/bear.pl").
-:- include("../game/templates/unit/mage.pl").
-:- include("../game/templates/unit/mage_dup_abils.pl").
-:- include("../game/templates/unit/tree.pl").
-
-:- include("../game/templates/weapon/bear_claws.pl").
-
-%% Main
-
-%% world_init :-
-%%   next_e(0),
-%%   player_create(0, _),
-%%   unit_create(mage, 10, 20, EID0),
-%%   unit_create(bear, 15, 30, _),
-%%   unit_create(tree, 5, 5, _),
-%%   unit_create(tree, 7, 7, _),
-%%   player_control_unit(0, EID0).
-
-%% update(FID) :-
-%%   update(input, FID),
-%%   update(move, FID).
-
-%% draw(FID) :-
-%%   update(render, FID).
-
-%% game_loop(FID) :-
-%%   update(FID),
-%%   draw(FID),
-%%   FID2 is FID+1,
-%%   game_loop(FID2).
-
-%% main :- world_init, game_loop(1).
-
+%% TODO: Regression Testing
 
 %% /* Tests */
 
@@ -429,3 +397,31 @@
 %@ c(0,player_no,1),
 %@ c(0,type,player).
 
+
+
+
+%% world_init :-
+%%   next_e(0),
+%%   player_create(0, _),
+%%   unit_create(mage, 10, 20, EID0),
+%%   unit_create(bear, 15, 30, _),
+%%   unit_create(tree, 5, 5, _),
+%%   unit_create(tree, 7, 7, _),
+%%   player_control_unit(0, EID0).
+
+
+
+%% update(FID) :-
+%%   update(input, FID),
+%%   update(move, FID).
+
+%% draw(FID) :-
+%%   update(render, FID).
+
+%% game_loop(FID) :-
+%%   update(FID),
+%%   draw(FID),
+%%   FID2 is FID+1,
+%%   game_loop(FID2).
+
+%% main :- world_init, game_loop(1).

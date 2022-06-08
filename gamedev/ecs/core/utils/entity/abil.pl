@@ -20,3 +20,29 @@ destroy_abil(EID)
   remove_component(EID, class),
   remove_component(EID, template),
   remove_component(EID, owner_id).
+
+abil_check @
+c(AID, type, abil) # passive,
+c(AID, class, Class) # passive
+\
+abil_check(AID, AbilTarget)
+<=>
+  c(AID, abil_target, AbilTarget),
+  c(AID, event_abil_check, Class).
+
+abil_execute @
+c(AID, type, abil) # passive,
+c(AID, class, Class) # passive
+\
+abil_execute(AID, AbilTarget)
+<=>
+  c(AID, abil_target, AbilTarget),
+  c(AID, event_abil_execute, Class).
+
+abil_cancel @
+c(AID, type, abil) # passive,
+c(AID, class, Class) # passive
+\
+abil_cancel(AID)
+<=>
+  c(AID, event_abil_cancel, Class).

@@ -32,3 +32,31 @@ c(EID, class, Class) # passive
 replace_unit_template(EID, Template)
 <=>
   c(EID, event_unit_replace_template, Class, Template).
+
+
+%% target of order can be
+%% target(point, Point), target(unit, UnitID), no_target
+unit_issue_order @
+c(UID, type, unit) # passive % TODO: check alive
+\
+unit_issue_order(UID, order(AbilTemplate, AbilTarget))
+<=>
+  c(UID, next_order_abil, AbilTemplate),
+  c(UID, next_order_abil_target, AbilTarget), 
+  c(UID, event_unit_issue_order, c_unit)
+
+  %% TODO:
+  %% Two options for event component:
+  %% 1. (Currently)remove event in the event handle system
+  %% 2. remove event in the event posteradd event sender? advangtage is event handle can see all the events and have no to remove them 
+  %% CHR is too powerful, a rule can see constraints on call stack!
+  
+  %% remove_component(UID, next_order_abil),
+  %% remove_component(UID, next_order_abil_target),
+  %% remove_component(UID, next_order_abil_target),  
+  .
+
+
+
+
+

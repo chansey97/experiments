@@ -37,7 +37,7 @@ c(TargetID, life_max, LifeMax) # passive
 \
 c(EffID, event_effect_start, c_effect_modify_unit)
 <=>
-  template_field_value_get(effect, Template, life, modify(change:Change, change_fraction:ChangeFraction)),
+  template_field_value_get(effect, Template, life, s_effect_modify_vital(change:Change, change_fraction:ChangeFraction)),
   Life2 is min(Life + Change, LifeMax),
   set_component(TargetID, life, Life2).
 

@@ -3,6 +3,7 @@ c(EID, template, Template) # passive
 \
 c(EID, event_unit_create, c_unit)
 <=>
+  c(EID, order_queue, []),  
   template_field_value_get(unit, Template, bounds, Bounds),
   template_field_value_get(unit, Template, life_starting, LifeStarting),  
   template_field_value_get(unit, Template, life_max, LifeMax),
@@ -32,6 +33,7 @@ c(EID, weapons, Weapons) # passive
 \
 c(EID, event_unit_destroy, c_unit)
 <=>
+  remove_component(EID, order_queue),
   remove_component(EID, bounds),
   remove_component(EID, life),
   remove_component(EID, life_max),
@@ -45,6 +47,8 @@ c(EID, event_unit_destroy, c_unit)
 
 %% N.B. c_unit_replace_template is only for abil_morph
 %% Is this really needed?
+
+%% TODO: How to deal with order_queue after morph?
 
 %% on replace template
 c_unit_replace_template @
@@ -69,7 +73,7 @@ c(EID, event_unit_replace_template, c_unit, Template2)
   template_field_value_get(unit, Template2, energy_max, EnergyMax2),
   template_field_value_get(unit, Template2, speed, Speed2),
   template_field_value_get(unit, Template2, abils, Abils2),
-  template_field_value_get(unit, Template2, weapons, Weapons2),  
+  template_field_value_get(unit, Template2, weapons, Weapons2),
   c(EID, bounds, Bounds2),
   c(EID, life, LifeStarting2),
   c(EID, life_max, LifeMax2),
@@ -106,20 +110,25 @@ c(EID, event_unit_replace_template, c_unit, Template2)
 %% TODO:
 %% If a abil requrie a target, the target_id will be a component already attached in abil entity
 
-unit_start_abil @
+c_unit_issue_order @
+c(UID, type, unit) # passive,
 c(UID, abils, AIDs) # passive,
-c(AID, template, Template) # passive
+c(AID, type, abil) # passive,
+c(AID, template, AbilTemplate) # passive
 \
-c(UID, event_unit_start_abil, c_unit, Template)
+c(UID, next_order_abil, AbilTemplate) # passive,
+c(UID, next_order_abil_target, AbilTarget) # passive,
+c(UID, event_unit_issue_order, c_unit)
 <=>
   memberchk(AID, AIDs),
-  template_class_get(abil, Template, Class),
-  c(AID, event_abil_check, Class)
+  abil_check(AID, AbilTarget)
   |
-  c(AID, event_abil_execute, Class).
+  abil_execute(AID, AbilTarget).
 
-unit_start_abil_cleanup @
-c(UID, event_unit_start_abil, c_unit, Template) <=> true.
+%% c_unit_issue_order_cleanup @
+%% c(UID, next_order_abil, AbilTemplate) # passive,
+%% c(UID, next_order_abil_target, AbilTarget) # passive,
+%% c(UID, event_unit_issue_order, c_unit)
+%% <=>
+%%   true.
 
-%% TODO:
-%% We need order system, which deal with target, unit group, order queue, etc ...

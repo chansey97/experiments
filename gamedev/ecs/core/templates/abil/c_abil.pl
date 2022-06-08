@@ -1,1 +1,0 @@
-%% common data for every ability.
