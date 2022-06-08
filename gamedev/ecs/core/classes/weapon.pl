@@ -1,13 +1,27 @@
 
-%% c_weapon
-class(c_weapon, super, null).
-class_field(c_weapon, name, {pred:string, default:""}).
+class(id = c_weapon, super = null,
+      [field(name = name,
+             pred = string,
+             default = "")
+      ]).
 
-%% c_weapon_legacy
-class(c_weapon_legacy, super, c_weapon).
-class_field(c_weapon_legacy, arc, {pred:number, default:0}).
-class_field(c_weapon_legacy, range, {pred:number, default:0}).
-class_field(c_weapon_legacy, period, {pred:integer, default:0}).
-class_field(c_weapon_legacy, damage_point, {pred:number, default:0}).
-class_field(c_weapon_legacy, backswing, {pred:number, default:0}).
-class_field(c_weapon_legacy, effect, {pred:atom, default:null}).
+class(id = c_weapon_legacy, super = c_weapon,
+      [field(name = arc,
+             pred = number,
+             default = ""),
+       field(name = range,
+             pred = number,
+             default = 0),
+       field(name = period,
+             pred = integer,
+             default = 0),
+       field(name = damage_point,
+             pred = number,
+             default = 0),
+       field(name = backswing,
+             pred = number,
+             default = 0),
+       field(name = effect,
+             pred = atom,
+             default = null)
+      ]).
