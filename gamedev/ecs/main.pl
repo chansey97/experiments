@@ -116,7 +116,7 @@
 %% Since class now has default value, no need use default templates in core.
 
 init :-
-  load_raw_templates("./core/templates"),
+  %% load_raw_templates("./core/templates"),
   load_raw_templates("./game/templates"),
   next_e(0).
 

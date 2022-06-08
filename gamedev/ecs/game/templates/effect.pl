@@ -68,34 +68,29 @@ template(catalog = effect, id = psi_storm_damage,
          ]).
 
 template(catalog = effect, id = psi_storm_persistent,
-         [class = c_effect_create_persistent,
-          parent = t_effect_create_persistent],     
+         [class = c_effect_create_persistent],     
          [name = "Psi Storm Persistent",
           initial_effect = psi_storm_search,
-          final_effect = null,
           periodic_effect = psi_storm_search,
           periodic_count = 6,
           periodic_duration = 1
          ]).
 
 template(catalog = effect, id = psi_storm_search,
-         [class = c_effect_enum_area,
-          parent = t_effect_enum_area],     
+         [class = c_effect_enum_area],     
          [name = "Psi Storm Search",
           area = 1.5,
           area_effect = psi_storm_apply_buff
          ]).
 
 template(catalog = effect, id = yamato_damage,
-         [class = c_effect_damage,
-          parent = t_effect_damage],     
+         [class = c_effect_damage],     
          [name = "Yamato Damage",
           amount = 250
          ]).
 
 template(catalog = effect, id = yamato_launch_missile,
-         [class = c_effect_launch_missile,
-          parent = t_effect_launch_missile],     
+         [class = c_effect_launch_missile],     
          [name = "Yamato Launch Missile",
           ammo_unit = yamato_weapon,
           launch_location = unit,

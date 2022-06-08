@@ -1,5 +1,4 @@
 
-%% TODO: t_behavior_buff ?
 template(catalog = behavior, id = psi_storm_buff,
          [class = c_behavior_buff],     
          [name = "Psi Storm Buff",

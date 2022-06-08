@@ -1,8 +1,7 @@
 %% TODO: emp_weapon and yamato_weapon as bullet unit.
 
 template(catalog = unit, id = bear,
-         [class = c_unit,
-          parent = t_unit],     
+         [class = c_unit],     
          [name = "Bear",
           bounds = 2,
           life_starting = 500,
@@ -14,10 +13,8 @@ template(catalog = unit, id = bear,
           weapons = [bear_claws]
          ]).
 
-
 template(catalog = unit, id = mage,
-         [class = c_unit,
-          parent = t_unit],     
+         [class = c_unit],     
          [name = "Mage",
           bounds = 1,
           life_starting = 100,
@@ -29,8 +26,7 @@ template(catalog = unit, id = mage,
          ]).
 
 template(catalog = unit, id = mage_dup_abils,
-         [class = c_unit,
-          parent = t_unit],     
+         [class = c_unit],     
          [name = "Mage Duplicate Abils",
           bounds = 1,
           life_starting = 100,
@@ -42,14 +38,14 @@ template(catalog = unit, id = mage_dup_abils,
          ]).
 
 template(catalog = unit, id = tree,
-         [class = c_unit,
-          parent = t_unit],     
-         [name = "Mage Duplicate Abils",
+         [class = c_unit],     
+         [name = "Tree",
           bounds = 1,
           life_starting = 100,
           life_max = 100,
           energy_starting = 0,
-          energy_max = 0
+          energy_max = 0,
+          speed = 0      
          ]).
 
 
