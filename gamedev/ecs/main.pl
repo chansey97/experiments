@@ -58,66 +58,59 @@
 :- dynamic raw_template/4, raw_template_field/4.
 
 %% Classes
-:- include("./core/classes/abil.pl").
-:- include("./core/classes/actor.pl").
-:- include("./core/classes/behavior.pl").
-:- include("./core/classes/effect.pl").
-:- include("./core/classes/unit.pl").
-:- include("./core/classes/weapon.pl").
+:- include("./game/classes/abil.pl").
+:- include("./game/classes/actor.pl").
+:- include("./game/classes/behavior.pl").
+:- include("./game/classes/effect.pl").
+:- include("./game/classes/unit.pl").
+:- include("./game/classes/weapon.pl").
 
 %% Utils
-:- include("./core/utils/common.pl").
-:- include("./core/utils/chr.pl").
-:- include("./core/utils/component.pl").
-:- include("./core/utils/class.pl").
-:- include("./core/utils/raw_template.pl").
+:- include("./game/utils/common.pl").
+:- include("./game/utils/chr.pl").
+:- include("./game/utils/component.pl").
+:- include("./game/utils/class.pl").
+:- include("./game/utils/raw_template.pl").
 
-:- include("./core/utils/entity/template.pl").
-:- include("./core/utils/entity/abil.pl").
-:- include("./core/utils/entity/effect.pl").
-:- include("./core/utils/entity/player.pl").
-:- include("./core/utils/entity/unit.pl").
-:- include("./core/utils/entity/weapon.pl").
+:- include("./game/utils/entity/template.pl").
+:- include("./game/utils/entity/abil.pl").
+:- include("./game/utils/entity/effect.pl").
+:- include("./game/utils/entity/player.pl").
+:- include("./game/utils/entity/unit.pl").
+:- include("./game/utils/entity/weapon.pl").
 
 %% Systems
-%% :- include("./core/systems/input.pl").
+%% :- include("./game/systems/input.pl").
 
-%% :- include("./core/systems/unit/c_unit.pl").
+%% :- include("./game/systems/unit/c_unit.pl").
 
-%% :- include("./core/systems/abil/c_abil.pl").
-%% :- include("./core/systems/abil/c_abil_attack.pl").
-%% :- include("./core/systems/abil/c_abil_effect.pl").
-%% :- include("./core/systems/abil/c_abil_effect_instant.pl").
-%% :- include("./core/systems/abil/c_abil_effect_target.pl").
-%% :- include("./core/systems/abil/c_abil_keyboard_move.pl").
-%% :- include("./core/systems/abil/c_abil_morph.pl").
-%% :- include("./core/systems/abil/c_abil_move.pl").
+%% :- include("./game/systems/abil/c_abil.pl").
+%% :- include("./game/systems/abil/c_abil_attack.pl").
+%% :- include("./game/systems/abil/c_abil_effect.pl").
+%% :- include("./game/systems/abil/c_abil_effect_instant.pl").
+%% :- include("./game/systems/abil/c_abil_effect_target.pl").
+%% :- include("./game/systems/abil/c_abil_keyboard_move.pl").
+%% :- include("./game/systems/abil/c_abil_morph.pl").
+%% :- include("./game/systems/abil/c_abil_move.pl").
 
-%% :- include("./core/systems/weapon/c_weapon_legacy.pl").
+%% :- include("./game/systems/weapon/c_weapon_legacy.pl").
 
-%% :- include("./core/systems/effect/c_effect_damage.pl").
-%% :- include("./core/systems/effect/c_effect_launch_missile.pl").
-%% :- include("./core/systems/effect/c_effect_modify_unit.pl").
+%% :- include("./game/systems/effect/c_effect_damage.pl").
+%% :- include("./game/systems/effect/c_effect_launch_missile.pl").
+%% :- include("./game/systems/effect/c_effect_modify_unit.pl").
 
-%% :- include("./core/systems/behavior/c_behavior_attribute.pl").
-%% :- include("./core/systems/behavior/c_behavior_buff.pl").
+%% :- include("./game/systems/behavior/c_behavior_attribute.pl").
+%% :- include("./game/systems/behavior/c_behavior_buff.pl").
 
-%% :- include("./core/systems/mover/c_mover.pl").
-%% :- include("./core/systems/mover/c_mover_avoid.pl").
+%% :- include("./game/systems/mover/c_mover.pl").
+%% :- include("./game/systems/mover/c_mover_avoid.pl").
 
-%% :- include("./core/systems/actor/c_actor.pl").
+%% :- include("./game/systems/actor/c_actor.pl").
 
-%% :- include("./core/systems/render.pl").
-
-%% NOTE:
-%% Only minor changes to support mods.
-
-%% TODO:
-%% Since class now has default value, no need use default templates in core.
+%% :- include("./game/systems/render.pl").
 
 init :-
-  %% load_raw_templates("./core/templates"),
-  load_raw_templates("./game/templates"),
+  load_raw_templates("./map/templates"),
   next_e(0).
 
 %% ?- init, listing(raw_template), listing(raw_template_field).        
