@@ -6,7 +6,7 @@ template(catalog = effect, id = t_effect_damage,
          ]).
 
 template(catalog = effect, id = t_effect_launch_missile,
-         [class = c_effect_lanuch_missile],     
+         [class = c_effect_launch_missile],     
          [name = "t_effect_damage",
           ammo_unit = null
          ]).

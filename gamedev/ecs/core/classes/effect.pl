@@ -66,7 +66,7 @@ class(id = c_effect_enum_area, super = c_effect_response,
             default = null)
       ]).
 
-class(id = c_effect_lanuch_missile, super = c_effect_response,
+class(id = c_effect_launch_missile, super = c_effect_response,
      [field(name = ammo_unit,
             pred = atom,
             default = null)
