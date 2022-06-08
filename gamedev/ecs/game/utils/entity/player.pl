@@ -1,7 +1,7 @@
 create_player @
-create_player(PlayerNo, EID), next_e(ID) # passive <=>
-  EID=ID,
-  NextID is ID+1, next_e(NextID),
+create_player(PlayerNo, EID), next_e(EID0) # passive <=>
+  EID=EID0,
+  NextEID is EID0+1, next_e(NextEID),
   c(EID, type, player),
   c(EID, player_no, PlayerNo).
 

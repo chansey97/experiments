@@ -1,9 +1,9 @@
 load_templates :-
   forall2(raw_template(Catalog, ID, class, Class), create_template(Catalog, ID, Class, _)).
 
-create_template(Catalog, ID, Class, EID), next_e(EID2) # passive <=>
-  EID = EID2,
-  EID3 is EID2+1, next_e(EID3),
+create_template(Catalog, ID, Class, EID), next_e(EID0) # passive <=>
+  EID = EID0,
+  NextEID is EID0+1, next_e(NextEID),
   c(EID, type, template),
   c(EID, catalog, Catalog),
   c(EID, id, ID),

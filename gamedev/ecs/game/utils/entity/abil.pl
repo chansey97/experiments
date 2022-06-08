@@ -1,7 +1,7 @@
 create_abil @
-create_abil(Template, OwnerID, EID), next_e(ID) # passive <=>
-  EID=ID,
-  NextID is ID+1, next_e(NextID),
+create_abil(Template, OwnerID, EID), next_e(EID0) # passive <=>
+  EID=EID0,
+  NextEID is EID0+1, next_e(NextEID),
   template_field_value_get(abil, Template, class, Class),
   c(EID, type, abil),
   c(EID, class, Class),

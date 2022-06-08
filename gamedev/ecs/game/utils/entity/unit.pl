@@ -1,7 +1,7 @@
 create_unit @
-create_unit(Template, X, Y, PlayerNo, EID), next_e(ID) # passive <=>
-  EID=ID,
-  NextID is ID+1, next_e(NextID),
+create_unit(Template, X, Y, PlayerNo, EID), next_e(EID0) # passive <=>
+  EID=EID0,
+  NextEID is EID0+1, next_e(NextEID),
   template_field_value_get(unit, Template, class, Class),
   c(EID, type, unit),
   c(EID, class, Class),

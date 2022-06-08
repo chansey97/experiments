@@ -6,9 +6,9 @@
 %% create_effect_by_unit_at_unit/4,
 
 create_effect @
-create_effect(Template, CasterID, TargetID, EID), next_e(ID) # passive <=>
-  EID=ID,
-  NextID is ID+1, next_e(NextID),
+create_effect(Template, CasterID, TargetID, EID), next_e(EID0) # passive <=>
+  EID=EID0,
+  NextEID is EID0+1, next_e(NextEID),
   template_field_value_get(effect, Template, class, Class),
   c(EID, type, effect),
   c(EID, class, Class),
