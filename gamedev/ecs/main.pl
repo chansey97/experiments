@@ -4,6 +4,8 @@
 
 :- debug.
 
+%% :- set_prolog_flag(chr_toplevel_show_store, false).
+
 :- chr_constraint
 
   %% TODO: template also use CHR
@@ -53,8 +55,7 @@
   destroy_player/1,  
   player_control_unit/2
   .
-
-:- discontiguous class/3, class_field/3.
+:- dynamic raw_template/4, raw_template_field/4.
 
 %% Classes
 :- include("./core/classes/abil.pl").
@@ -95,7 +96,7 @@
 %% :- include("./core/systems/weapon/c_weapon_legacy.pl").
 
 %% :- include("./core/systems/effect/c_effect_damage.pl").
-%% :- include("./core/systems/effect/c_effect_lanuch_missile.pl").
+%% :- include("./core/systems/effect/c_effect_launch_missile.pl").
 %% :- include("./core/systems/effect/c_effect_modify_unit.pl").
 
 %% :- include("./core/systems/behavior/c_behavior_attribute.pl").
