@@ -20,14 +20,16 @@ load_raw_template(File) :-
   %% format("load_raw_template ~w ~n", [File]),
   read_file_to_terms(File, Terms, []),
   maplist([Term]>>
-         (   Term =.. [template, catalog=Catalog, id=ID, Heads, Fields]
+         (   Term =.. [template, catalog=Catalog, id=ID, Heads, Fields],
+             maplist([K=V]>>true, Heads),
+             maplist([K=V]>>true, Fields)
          ->  (   raw_template(Catalog, ID, _, _)
              ->  format("load_raw_template Error. The template ~w ~w is duplicate.~n", [Catalog, ID]),
                  false
-             ;   maplist({Catalog, ID}/[Head]>>(Head=(K=V), assertz(raw_template(Catalog, ID, K, V))), Heads),
-                 maplist({Catalog, ID}/[Field]>>(Field=(K=V), assertz(raw_template_field(Catalog, ID, K, V))), Fields)
+             ;   maplist({Catalog, ID}/[K=V]>>(assertz(raw_template(Catalog, ID, K, V))), Heads),
+                 maplist({Catalog, ID}/[K=V]>>(assertz(raw_template_field(Catalog, ID, K, V))), Fields)
              )
-         ;   format("load_raw_template Warning. The term ~w is not a template, ignored.~n", [Term])
+         ;   format("load_raw_template Warning. The template ~w ~w is not valid, ignored.~n", [Catalog, ID])
          ), Terms).
 
 raw_template_class_get(Catalog, ID, Class) :-
@@ -42,4 +44,3 @@ raw_template_field_value_get(Catalog, ID, Field, Value) :-
   ;   raw_template_parent_get(Catalog, ID, Parent),
       raw_template_field_value_get(Catalog, Parent, Field, Value)
   ), !.
-
