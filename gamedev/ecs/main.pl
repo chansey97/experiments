@@ -123,7 +123,7 @@ init :-
 
 %% /* Tests */
 
-%% ?- next_e(1), create_abil(move, 0, AID).
+%% ?- init(1), create_abil(move, 0, AID).
 %@ AID = 1,
 %@ next_e(2),
 %@ c(1,cooldown,0),
