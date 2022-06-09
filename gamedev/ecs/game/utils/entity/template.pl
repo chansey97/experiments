@@ -1,3 +1,8 @@
+%% The most main reao
+%% N.B.
+%% The main reason why I made template also an entity (using an integer as e_id, not a atom) is because
+%% I hope each player could have their own templates' version, which can be modified by triggers in the future.
+
 load_templates :-
   forall2(raw_template(Catalog, ID, class, Class), create_template(Catalog, ID, Class, _)).
 
