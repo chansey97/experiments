@@ -1,8 +1,8 @@
 
 %% ECS interfaces
 
-next_e(EID0) #passive \ get_next_e(EID) <=> EID = EID0.
-get_next_e(EID) <=> false.
+%% next_e(EID0) #passive \ get_next_e(EID) <=> EID = EID0.
+%% get_next_e(EID) <=> false.
 
 %% TODO:
 %% c(EID, Component, Value) should not be called as component
