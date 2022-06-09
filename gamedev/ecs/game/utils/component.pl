@@ -42,7 +42,7 @@ entity(EID) :-
 
 print_entity(EID) :-
   format("print_entity EID=~w:\n", EID),
-  forall(entity_component(EID, Component, Value), format("% ~w\n", c(EID, Component, Value))).
+  forall(entity_component(EID, Component, Value), format(" ~w\n", c(EID, Component, Value))).
 
 
 print_entities_when(Pred) :-
