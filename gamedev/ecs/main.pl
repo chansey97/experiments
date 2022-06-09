@@ -132,9 +132,10 @@ init :-
 
 %% /* Tests */
 
-%% ?- init,
-%%    load_templates,
+%% ?- init, load_templates,
 %%    create_abil(move, 0, AID),
+%%    print_entities_when([EID, Group]>>(\+ member(c(_, type, template), Group))),
+%%    destroy_abil(AID),
 %%    print_entities_when([EID, Group]>>(\+ member(c(_, type, template), Group))).
 %@ print_entities_when
 %@ print_entity
@@ -142,13 +143,15 @@ init :-
 %@  c(35,owner_id,0)
 %@  c(35,template,move)
 %@  c(35,type,abil)
+%@ print_entities_when
 %@ AID = 35.
-
 
 %% ---
 
 
-%% ?- next_e(1), create_weapon(bear_claws, 0, AID).
+%% ?- init, load_templates,
+%%    create_weapon(bear_claws, 0, AID),
+%%    print_entities_when([EID, Group]>>(\+ member(c(_, type, template), Group))).
 %@ AID = 1,
 %@ next_e(2),
 %@ c(1,time_point,0),
