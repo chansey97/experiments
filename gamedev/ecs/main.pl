@@ -17,7 +17,11 @@
   c/2,  
   c/3,
   c/4,
-  c/5,  
+  c/5,
+  e/1,
+  e/2,
+  e/3,
+  e/4,  
   update/2,
 
   get_components/2, one_c/1, collect_c/1,  
@@ -66,7 +70,7 @@
 :- include("./game/classes/weapon.pl").
 
 %% Utils
-:- include("./game/utils/common.pl").
+:- include("./game/utils/misc.pl").
 :- include("./game/utils/chr.pl").
 :- include("./game/utils/component.pl").
 :- include("./game/utils/class.pl").
@@ -91,7 +95,7 @@
 %% :- include("./game/systems/abil/c_abil_effect_target.pl").
 %% :- include("./game/systems/abil/c_abil_keyboard_move.pl").
 %% :- include("./game/systems/abil/c_abil_morph.pl").
-%% :- include("./game/systems/abil/c_abil_move.pl").
+:- include("./game/systems/abil/c_abil_move.pl").
 
 %% :- include("./game/systems/weapon/c_weapon_legacy.pl").
 
@@ -109,9 +113,9 @@
 
 %% :- include("./game/systems/render.pl").
 
-init :-
+init(InitEID) :-
   load_raw_templates("./map/templates"),
-  next_e(0).
+  next_e(InitEID).
 
 %% ?- init, listing(raw_template), listing(raw_template_field).        
 
@@ -123,7 +127,10 @@ init :-
 
 %% /* Tests */
 
-%% ?- init(1), create_abil(move, 0, AID).
+%% ?- init(1), load_templates, create_abil(move, 0, AID).
+
+
+
 %@ AID = 1,
 %@ next_e(2),
 %@ c(1,cooldown,0),

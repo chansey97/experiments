@@ -1,48 +1,60 @@
-create_abil @
-create_abil(Template, OwnerID, EID), next_e(EID0) # passive <=>
+
+%% create_abil
+c(T_EID, type, template) # passive,
+c(T_EID, catalog, abil) # passive,
+c(T_EID, id, Tempalte) # passive
+\
+create_abil(Tempalte, OwnerID, EID),
+next_e(EID0) # passive
+<=>
   EID=EID0,
   NextEID is EID0+1, next_e(NextEID),
-  template_field_value_get(abil, Template, class, Class),
   c(EID, type, abil),
-  c(EID, class, Class),
-  c(EID, template, Template),  
+  c(EID, template, Tempalte),  
   c(EID, owner_id, OwnerID),
-  c(EID, event_abil_create, Class).
+  e(abil_init, T_EID, EID).
 
-destory_abil @
-c(EID, type, abil) # passive,
-c(EID, class, Class) # passive
-\
-destroy_abil(EID)
-<=>
-  c(EID, event_abil_destroy, Class),
-  remove_component(EID, type),
-  remove_component(EID, class),
-  remove_component(EID, template),
-  remove_component(EID, owner_id).
+create_abil(Tempalte, OwnerID, EID) <=> true.
 
-abil_check @
-c(AID, type, abil) # passive,
-c(AID, class, Class) # passive
+%% destroy_abil
+c(A_EID, type, abil) # passive,
+c(A_EID, template, Tempalte) # passive,
+c(T_EID, type, template) # passive,
+c(T_EID, catalog, abil) # passive,
+c(T_EID, id, Tempalte) # passive
 \
-abil_check(AID, AbilTarget)
+destroy_abil(A_EID)
 <=>
-  c(AID, abil_target, AbilTarget),
-  c(AID, event_abil_check, Class).
+  e(abil_fini, T_EID, A_EID),
+  remove_component(A_EID, type),
+  remove_component(A_EID, template),
+  remove_component(A_EID, owner_id).
 
-abil_execute @
-c(AID, type, abil) # passive,
-c(AID, class, Class) # passive
-\
-abil_execute(AID, AbilTarget)
-<=>
-  c(AID, abil_target, AbilTarget),
-  c(AID, event_abil_execute, Class).
+destroy_abil(A_EID) <=> true.
 
-abil_cancel @
-c(AID, type, abil) # passive,
-c(AID, class, Class) # passive
-\
-abil_cancel(AID)
-<=>
-  c(AID, event_abil_cancel, Class).
+
+%% abil_check @
+%% c(AID, type, abil) # passive,
+%% c(AID, class, Class) # passive
+%% \
+%% abil_check(AID, AbilTarget)
+%% <=>
+%%   c(AID, abil_target, AbilTarget),
+%%   c(AID, event_abil_check, Class).
+
+%% abil_execute @
+%% c(AID, type, abil) # passive,
+%% c(AID, class, Class) # passive
+%% \
+%% abil_execute(AID, AbilTarget)
+%% <=>
+%%   c(AID, abil_target, AbilTarget),
+%%   c(AID, event_abil_execute, Class).
+
+%% abil_cancel @
+%% c(AID, type, abil) # passive,
+%% c(AID, class, Class) # passive
+%% \
+%% abil_cancel(AID)
+%% <=>
+%%   c(AID, event_abil_cancel, Class).
