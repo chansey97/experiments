@@ -7,7 +7,7 @@ ps.
 chr_listing(Spec) :-
   format('chr_listing ~w:~n', [Spec]),
   forall(find_chr_constraint(Constraint),
-         (   unifiable(Constraint, Spec, _)
-         ->  format('~w~n', [Constraint])
+         (   subsumes_term(Spec, Constraint)
+         ->  format('% ~w~n', [Constraint])
          ;   true
          )).
