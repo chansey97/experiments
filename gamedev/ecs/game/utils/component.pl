@@ -44,7 +44,6 @@ print_entity(EID) :-
   format("print_entity~n"),
   forall(entity_component(EID, Component, Value), format(" ~w\n", c(EID, Component, Value))).
 
-
 print_entities_when(Pred) :-
   format("print_entities_when~n"),  
   forall((entity(EID),
