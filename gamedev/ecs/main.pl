@@ -4,7 +4,7 @@
 
 :- debug.
 
-%% :- set_prolog_flag(chr_toplevel_show_store, false).
+:- set_prolog_flag(chr_toplevel_show_store, false).
 
 :- chr_constraint
 
@@ -14,6 +14,7 @@
   %% template_field_value_get/4,
   
   next_e/1,
+  %% get_next_e/1,  
   c/2,  
   c/3,
   c/4,
@@ -113,31 +114,39 @@
 
 %% :- include("./game/systems/render.pl").
 
-init(InitEID) :-
+init :-
   load_raw_templates("./map/templates"),
-  next_e(InitEID).
+  next_e(10).
 
 %% ?- init, listing(raw_template), listing(raw_template_field).        
 
 %% ?- init, load_templates, chr_listing(_).
 
-
+%% ?- init,
+%%    load_templates,
+%%    print_entities_when([EID, Group]>>(\+ member(c(_, type, template), Group))).
+%@ print_entities_when: 
+%@ true.
 
 %% TODO: Regression Testing
 
 %% /* Tests */
 
-%% ?- init(1), load_templates, create_abil(move, 0, AID).
+%% ?- init,
+%%    load_templates,
+%%    create_abil(move, 0, AID),
+%%    print_entities_when([EID, Group]>>(\+ member(c(_, type, template), Group))).
+%@ print_entities_when
+%@ print_entity
+%@  c(35,cooldown,0)
+%@  c(35,owner_id,0)
+%@  c(35,template,move)
+%@  c(35,type,abil)
+%@ AID = 35.
 
 
+%% ---
 
-%@ AID = 1,
-%@ next_e(2),
-%@ c(1,cooldown,0),
-%@ c(1,owner_id,0),
-%@ c(1,template,move),
-%@ c(1,class,c_abil_move),
-%@ c(1,type,abil).
 
 %% ?- next_e(1), create_weapon(bear_claws, 0, AID).
 %@ AID = 1,
