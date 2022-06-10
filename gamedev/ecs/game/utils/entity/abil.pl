@@ -1,34 +1,44 @@
 
 %% create_abil
-c(T_EID, type, template) # passive,
-c(T_EID, catalog, abil) # passive,
-c(T_EID, id, Tempalte) # passive
+c(T_EID, type, template)             # passive,
+c(T_EID, catalog, abil)              # passive,
+c(T_EID, id, Tempalte)               # passive,
+c(T_EID, class, Class)               # passive,
+c(C_EID, type, class)                # passive,
+c(C_EID, id, Class)                  # passive
 \
-create_abil(Tempalte, OwnerID, EID),
-next_e(EID0) # passive
+create_abil(Tempalte, OwnerID, EID)           ,
+next_e(EID0)                         # passive
 <=>
+  format("create_abil ~w ~w ~w ~n", [Tempalte, OwnerID, EID]),  
   EID=EID0,
-  NextEID is EID0+1, next_e(NextEID),
+  NextEID is EID0+1, next_e(NextEID),   
   c(EID, type, abil),
   c(EID, template, Tempalte),  
   c(EID, owner_id, OwnerID),
-  e(abil_init, T_EID, EID).
+  e(abil_init, C_EID, T_EID, EID),
+  true.
 
 create_abil(Tempalte, OwnerID, EID) <=> true.
 
 %% destroy_abil
-c(A_EID, type, abil) # passive,
+c(A_EID, type, abil)         # passive,
 c(A_EID, template, Tempalte) # passive,
-c(T_EID, type, template) # passive,
-c(T_EID, catalog, abil) # passive,
-c(T_EID, id, Tempalte) # passive
+c(T_EID, type, template)     # passive,
+c(T_EID, catalog, abil)      # passive,
+c(T_EID, id, Tempalte)       # passive,
+c(T_EID, class, Class)       # passive,
+c(C_EID, type, class)        # passive,
+c(C_EID, id, Class)          # passive
 \
 destroy_abil(A_EID)
 <=>
-  e(abil_fini, T_EID, A_EID),
+  format("destroy_abil ~w ~n", [A_EID]),    
+  e(abil_fini, C_EID, T_EID, A_EID),
   remove_component(A_EID, type),
   remove_component(A_EID, template),
-  remove_component(A_EID, owner_id).
+  remove_component(A_EID, owner_id),  
+  true.
 
 destroy_abil(A_EID) <=> true.
 

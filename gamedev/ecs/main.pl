@@ -19,8 +19,6 @@
   c/3,
   c/4,
   c/5,
-  e/1,
-  e/2,
   e/3,
   e/4,  
   update/2,
@@ -92,7 +90,7 @@
 
 :- include("./game/systems/unit/c_unit.pl").
 
-%% :- include("./game/systems/abil/c_abil.pl").
+:- include("./game/systems/abil/c_abil.pl").
 %% :- include("./game/systems/abil/c_abil_attack.pl").
 %% :- include("./game/systems/abil/c_abil_effect.pl").
 %% :- include("./game/systems/abil/c_abil_effect_instant.pl").
@@ -147,6 +145,25 @@ init :-
 %%    destroy_abil(A_EID),
 %%    print_entities_when([EID, Group]>>(\+ member(c(_, type, class), Group) ,
 %%                                       \+ member(c(_, type, template), Group))).
+%@ create_abil move 0 _90434 
+%@ c_abil_move abil_init
+%@ c_abil abil_init
+%@ > print_entities_when
+%@ > > print_entity
+%@     c(58,cooldown,0)
+%@     c(58,owner_id,0)
+%@     c(58,template,move)
+%@     c(58,type,abil)
+%@ destroy_abil 58 
+%@ c_abil_move abil_fini
+%@ c_abil abil_fini
+%@ > print_entities_when
+%@ A_EID = 58.
+
+
+
+
+
 %@ > print_entities_when
 %@ > > print_entity
 %@     c(58,cooldown,0)
@@ -172,8 +189,6 @@ init :-
 %@     c(58,type,weapon)
 %@ > print_entities_when
 %@ W_EID = 58.
-
-
 
 %% ?- init,
 %%    create_effect(bear_claws_damage, 0, 0, E_EID),
