@@ -1,14 +1,16 @@
-c_weapon_legacy_create @
-c(EID, template, Template) # passive
-\
-c(EID, event_weapon_create, c_weapon_legacy)
-<=>
-  %% TODO: morphing time and stages?
-  c(EID, time_point, 0).
 
-c_weapon_legacy_destroy @
-c(EID, template, Template) # passive
+%% weapon_init
+c(T_EID, class, c_weapon_legacy) # passive
 \
-c(EID, event_weapon_destroy, c_weapon_legacy)
+e(weapon_init, T_EID, W_EID)
 <=>
-  remove_component(EID, time_point).
+  c(W_EID, cooldown, 0),
+  c(W_EID, time_point, 0).
+
+%% weapon_fini
+c(T_EID, class, c_weapon_legacy) # passive
+\
+e(weapon_fini, T_EID, W_EID)
+<=> 
+  remove_component(W_EID, cooldown),
+  remove_component(W_EID, time_point).

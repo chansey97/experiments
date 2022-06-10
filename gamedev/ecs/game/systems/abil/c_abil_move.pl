@@ -1,23 +1,13 @@
-%% c_abil_move_create @
-%% c(EID, template, Template) # passive
-%% \
-%% c(EID, event_abil_create, c_abil_move)
-%% <=>
-%%   c(EID, cooldown, 0).
+%% TODO: need c(A_EID, type, unit) at the rule's head?
 
-%% c_abil_move_destroy @
-%% c(EID, template, Template) # passive
-%% \
-%% c(EID, event_abil_destroy, c_abil_move)
-%% <=>
-%%   remove_component(EID, cooldown).
-
+%% abil_init
 c(T_EID, class, c_abil_move) # passive
 \
 e(abil_init, T_EID, A_EID)
 <=>
   c(A_EID, cooldown, 0).
 
+%% abil_fini
 c(T_EID, class, c_abil_move) # passive
 \
 e(abil_fini, T_EID, A_EID)

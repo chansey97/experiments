@@ -48,4 +48,15 @@ template(catalog = unit, id = tree,
           speed = 0      
          ]).
 
-
+template(catalog = unit, id = test_unit,
+         [class = c_unit],     
+         [name = "test_unit",
+          bounds = 2,
+          life_starting = 500,
+          life_max = 500,
+          energy_starting = 0,
+          energy_max = 0,
+          speed = 7,
+          abils = [move],
+          weapons = [bear_claws]
+         ]).

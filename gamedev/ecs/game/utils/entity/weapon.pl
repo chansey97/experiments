@@ -1,21 +1,32 @@
-create_weapon @
-create_weapon(Template, OwnerID, EID), next_e(EID0) # passive <=>
+%% create_weapon
+c(T_EID, type, template) # passive,
+c(T_EID, catalog, weapon) # passive,
+c(T_EID, id, Tempalte) # passive
+\
+create_weapon(Template, OwnerID, EID),
+next_e(EID0) # passive
+<=>
   EID=EID0,
   NextEID is EID0+1, next_e(NextEID),
-  template_field_value_get(weapon, Template, class, Class),  
   c(EID, type, weapon),
-  c(EID, class, Class),  
   c(EID, template, Template),
   c(EID, owner_id, OwnerID),  
-  c(EID, event_weapon_create, Class).
+  e(weapon_init, T_EID, EID).
 
-destroy_weapon @
-c(EID, type, weapon) # passive,
-c(EID, class, Class) # passive
+create_weapon(Tempalte, OwnerID, EID) <=> true.
+
+%% destroy_weapon
+c(W_EID, type, weapon) # passive,
+c(W_EID, template, Tempalte) # passive,
+c(T_EID, type, template) # passive,
+c(T_EID, catalog, weapon) # passive,
+c(T_EID, id, Tempalte) # passive
 \
-destroy_weapon(EID) <=>
-  c(EID, event_weapon_destroy, Class),
-  remove_component(EID, type),
-  remove_component(EID, class),
-  remove_component(EID, template),
-  remove_component(EID, owner_id).
+destroy_weapon(W_EID)
+<=>
+  e(weapon_fini, T_EID, W_EID),
+  remove_component(W_EID, type), 
+  remove_component(W_EID, template),
+  remove_component(W_EID, owner_id).
+
+destroy_weapon(W_EID) <=> true.
