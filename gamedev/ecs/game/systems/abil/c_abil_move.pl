@@ -1,5 +1,7 @@
 %% TODO: need c(A_EID, type, unit) at the rule's head?
 
+%% TODO: c(C_EID, super, SuperClass) should be c(C_EID, super_id, SC_EID)
+
 %% abil_init
 c(C_EID, type, class)             # passive,
 c(C_EID, id, c_abil_move)         # passive,
