@@ -11,7 +11,7 @@ c(C_EID, id, Class)                  # passive
 create_abil(Tempalte, OwnerID, EID)           ,
 next_e(EID0)                         # passive
 <=>
-  format("create_abil ~w ~w ~w ~n", [Tempalte, OwnerID, EID]),  
+  %% format("create_abil ~w ~w ~w ~n", [Tempalte, OwnerID, EID]),  
   EID=EID0,
   NextEID is EID0+1, next_e(NextEID),   
   c(EID, type, abil),
@@ -35,7 +35,7 @@ c(C_EID, id, Class)          # passive
 \
 destroy_abil(A_EID)
 <=>
-  format("destroy_abil ~w ~n", [A_EID]),    
+  %% format("destroy_abil ~w ~n", [A_EID]),    
   e(abil_fini, C_EID, T_EID, A_EID),
   remove_component(A_EID, type),
   remove_component(A_EID, template),

@@ -11,7 +11,7 @@ c(SC_EID, id, SuperClass)         # passive
 \
 e(abil_init, C_EID, T_EID, A_EID)
 <=>
-  format("c_abil_move abil_init~n"),
+  %% format("c_abil_move abil_init~n"),
   e(abil_init, SC_EID, T_EID, EID),
   c(A_EID, cooldown, 0).
 
@@ -24,6 +24,6 @@ c(SC_EID, id, SuperClass)         # passive
 \
 e(abil_fini, C_EID, T_EID, A_EID)
 <=>
-  format("c_abil_move abil_fini~n"),  
+  %% format("c_abil_move abil_fini~n"),  
   remove_component(A_EID, cooldown),
   e(abil_fini, SC_EID, T_EID, EID).

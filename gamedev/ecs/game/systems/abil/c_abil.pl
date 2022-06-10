@@ -5,7 +5,7 @@ c(C_EID, id, c_abil)              # passive
 \
 e(abil_init, C_EID, T_EID, A_EID)
 <=>
-  format("c_abil abil_init~n"),
+  %% format("c_abil abil_init~n"),
   true.
 
 %% abil_fini
