@@ -3,7 +3,7 @@
 c(T_EID, type, template)             # passive,
 c(T_EID, catalog, abil)              # passive,
 c(T_EID, id, Tempalte)               # passive,
-c(T_EID, class, Class)               # passive,
+c(T_EID, class, Class)               # passive, % TODO: It is better c(T_EID, class, Class) is c(T_EID, class_eid, C_EID)
 c(C_EID, type, class)                # passive,
 c(C_EID, id, Class)                  # passive
 \
@@ -16,6 +16,7 @@ next_e(EID0)                         # passive
   c(EID, type, abil),
   c(EID, template, Tempalte),  
   c(EID, owner_id, OwnerID),
+  %% TODO: Is just e(abil_init, Class, Template, EID) is enough?
   e(abil_init, C_EID, T_EID, EID),
   true.
 
