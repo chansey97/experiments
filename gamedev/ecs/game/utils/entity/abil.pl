@@ -1,3 +1,4 @@
+%% TODO: Ideally All the reference in class, template and entity, should sue EID instead of name.
 
 %% create_abil
 c(T_EID, type, template)             # passive,
