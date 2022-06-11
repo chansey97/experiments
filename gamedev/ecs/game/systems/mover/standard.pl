@@ -1,5 +1,3 @@
-%% common logic for every mover?
-
 %% movement_system @ update(move, FID), c(EID, velocity, V) #passive \ c(EID, position, X-Y) #passive <=>
 %%   random(-1.0,1.0,Rand),
 %%   X2 is X+Rand*V,

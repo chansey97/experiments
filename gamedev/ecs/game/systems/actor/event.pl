@@ -1,4 +1,7 @@
-%% common logic for every actor?
+
+%% actor template entity handle unit create event
+%% actor entity handle unit changed event
+%% they are configed by users (i.e. in actor tempalte) 
 
 %% 'actor entity' 的创建，基于在 'actor template entity' 上的小 trigger，那些 trigger handle unit 创建事件来创建真正的 'actor entity'。
 %% 由于采用了 ECS 系统，不同类型的 actor 可以都可以 handle 事件，这些逻辑没必要一定依附于类，即：

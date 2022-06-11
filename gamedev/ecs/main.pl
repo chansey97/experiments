@@ -77,51 +77,46 @@
 :- include("./game/utils/class.pl").
 :- include("./game/utils/raw_template.pl").
 
-:- include("./game/utils/entity/template.pl").
-:- include("./game/utils/entity/abil.pl").
-:- include("./game/utils/entity/effect.pl").
-:- include("./game/utils/entity/player.pl").
-:- include("./game/utils/entity/unit.pl").
-:- include("./game/utils/entity/weapon.pl").
+:- include("./game/utils/template.pl").
+:- include("./game/utils/player.pl").
+
+:- include("./game/utils/unit/create.pl").
+:- include("./game/utils/unit/destroy.pl").
+:- include("./game/utils/unit/issue_order.pl").
+:- include("./game/utils/unit/replace_template.pl").
+
+:- include("./game/utils/abil/create.pl").
+:- include("./game/utils/abil/destroy.pl").
+:- include("./game/utils/abil/check.pl").
+:- include("./game/utils/abil/execute.pl").
+:- include("./game/utils/abil/cancel.pl").
+
+:- include("./game/utils/weapon/create.pl").
+:- include("./game/utils/weapon/destroy.pl").
+
+:- include("./game/utils/effect/create.pl").
+:- include("./game/utils/effect/destroy.pl").
+:- include("./game/utils/effect/start.pl").
+
 
 %% Systems
 %% :- include("./game/systems/input.pl").
 
-:- include("./game/systems/unit/c_unit.pl").
+:- include("./game/systems/unit/ai.pl").
+:- include("./game/systems/unit/missile.pl").
 
-:- include("./game/systems/abil/c_abil.pl").
-%% :- include("./game/systems/abil/c_abil_attack.pl").
-%% :- include("./game/systems/abil/c_abil_effect.pl").
-%% :- include("./game/systems/abil/c_abil_effect_instant.pl").
-%% :- include("./game/systems/abil/c_abil_effect_target.pl").
-%% :- include("./game/systems/abil/c_abil_keyboard_move.pl").
-%% :- include("./game/systems/abil/c_abil_morph.pl").
-:- include("./game/systems/abil/c_abil_move.pl").
+:- include("./game/systems/abil/staging.pl").
 
-:- include("./game/systems/weapon/c_weapon_legacy.pl").
+:- include("./game/systems/weapon/staging.pl").
 
-%% :- include("./game/systems/effect/c_effect_damage.pl").
-%% :- include("./game/systems/effect/c_effect_launch_missile.pl").
-%% :- include("./game/systems/effect/c_effect_modify_unit.pl").
+:- include("./game/systems/effect/persistent.pl").
 
-%% :- include("./game/systems/behavior/c_behavior_attribute.pl").
-%% :- include("./game/systems/behavior/c_behavior_buff.pl").
+:- include("./game/systems/mover/standard.pl").
+:- include("./game/systems/mover/flock.pl").
 
-%% :- include("./game/systems/mover/c_mover.pl").
-%% :- include("./game/systems/mover/c_mover_avoid.pl").
-
-%% :- include("./game/systems/actor/c_actor.pl").
+:- include("./game/systems/actor/event.pl").
 
 %% :- include("./game/systems/render.pl").
-
-
-%% ?- class_superclass(c_abil_effect_target,C2).
-%@ C2 = c_abil_effect ;
-%@ C2 = c_abil ;
-%@ C2 = null ;
-%@ false.
-
-
 
 
 init :-

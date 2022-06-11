@@ -26,19 +26,29 @@ next_e(EID0) # passive
 
 create_effect(Template, CasterID, TargetID, EID) <=> true.
 
-%% destroy_effect
-c(E_EID, type, effect) # passive,
-c(E_EID, template, Tempalte) # passive,
-c(T_EID, type, template) # passive,
-c(T_EID, catalog, effect) # passive,
-c(T_EID, id, Tempalte) # passive
-\
-destroy_effect(E_EID)
-<=>
-  e(effect_fini, T_EID, E_EID),
-  remove_component(E_EID, type),
-  remove_component(E_EID, template),
-  remove_component(E_EID, caster_id),
-  remove_component(E_EID, target_id).
 
-destroy_effect(E_EID) <=> true.
+/**/
+
+%% c(T_EID, class, c_effect_damage) # passive
+%% \
+%% e(effect_init, T_EID, E_EID)
+%% <=>
+%%   %% e(effect_start, T_EID, E_EID),
+%%   destroy_effect(EID). % damage is transient
+
+%% c_effect_launch_missile_create @
+%% c(EID, template, Template) # passive
+%% \
+%% c(EID, event_effect_create, c_effect_launch_missile)
+%% <=>
+%%   c(EID, event_effect_start, c_effect_launch_missile).
+
+%% c_effect_modify_unit_create @
+%% c(EID, template, Template) # passive
+%% \
+%% c(EID, event_effect_create, c_effect_modify_unit)
+%% <=>
+%%   c(EID, event_effect_start, c_effect_modify_unit),
+%%   destroy_effect(EID).          % transient effect
+
+%% c_effect_persistent

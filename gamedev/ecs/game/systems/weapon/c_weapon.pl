@@ -1,1 +1,0 @@
-%% common logic for every weapon?
