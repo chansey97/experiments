@@ -77,7 +77,6 @@
 :- include("./game/utils/class.pl").
 :- include("./game/utils/raw_template.pl").
 
-:- include("./game/utils/entity/class.pl").
 :- include("./game/utils/entity/template.pl").
 :- include("./game/utils/entity/abil.pl").
 :- include("./game/utils/entity/effect.pl").
@@ -115,10 +114,20 @@
 
 %% :- include("./game/systems/render.pl").
 
+
+%% ?- class_superclass(c_abil_effect_target,C2).
+%@ C2 = c_abil_effect ;
+%@ C2 = c_abil ;
+%@ C2 = null ;
+%@ false.
+
+
+
+
 init :-
   load_raw_templates("./map/templates"),
   next_e(10),
-  load_classes,
+
   load_templates.
 
 %% ?- load_raw_templates("./map/templates"),
@@ -145,33 +154,21 @@ init :-
 %%    destroy_abil(A_EID),
 %%    print_entities_when([EID, Group]>>(\+ member(c(_, type, class), Group) ,
 %%                                       \+ member(c(_, type, template), Group))).
-%@ create_abil move 0 _90434 
+%@ create_abil move 0 _86494 
 %@ c_abil_move abil_init
 %@ c_abil abil_init
 %@ > print_entities_when
 %@ > > print_entity
-%@     c(58,cooldown,0)
-%@     c(58,owner_id,0)
-%@     c(58,template,move)
-%@     c(58,type,abil)
-%@ destroy_abil 58 
+%@     c(36,cooldown,0)
+%@     c(36,owner_id,0)
+%@     c(36,template,move)
+%@     c(36,type,abil)
+%@ destroy_abil 36 
 %@ c_abil_move abil_fini
 %@ c_abil abil_fini
 %@ > print_entities_when
-%@ A_EID = 58.
+%@ A_EID = 36.
 
-
-
-
-
-%@ > print_entities_when
-%@ > > print_entity
-%@     c(58,cooldown,0)
-%@     c(58,owner_id,0)
-%@     c(58,template,move)
-%@     c(58,type,abil)
-%@ > print_entities_when
-%@ A_EID = 58.
 
 %% ?- init,
 %%    create_weapon(bear_claws, 0, W_EID),
@@ -182,13 +179,13 @@ init :-
 %%                                       \+ member(c(_, type, template), Group))).
 %@ > print_entities_when
 %@ > > print_entity
-%@     c(58,time_point,0)
-%@     c(58,cooldown,0)
-%@     c(58,owner_id,0)
-%@     c(58,template,bear_claws)
-%@     c(58,type,weapon)
+%@     c(36,time_point,0)
+%@     c(36,cooldown,0)
+%@     c(36,owner_id,0)
+%@     c(36,template,bear_claws)
+%@     c(36,type,weapon)
 %@ > print_entities_when
-%@ W_EID = 58.
+%@ W_EID = 36.
 
 %% ?- init,
 %%    create_effect(bear_claws_damage, 0, 0, E_EID),
@@ -196,11 +193,12 @@ init :-
 %%                                       \+ member(c(_, type, template), Group))).
 %@ > print_entities_when
 %@ > > print_entity
-%@     c(58,target_id,0)
-%@     c(58,caster_id,0)
-%@     c(58,template,bear_claws_damage)
-%@     c(58,type,effect)
-%@ E_EID = 58.
+%@     c(36,target_id,0)
+%@     c(36,caster_id,0)
+%@     c(36,template,bear_claws_damage)
+%@     c(36,type,effect)
+%@ E_EID = 36.
+
 
 %% ?- init,
 %%    create_player(1, P_EID),
@@ -211,10 +209,10 @@ init :-
 %%                                       \+ member(c(_, type, template), Group))).
 %@ > print_entities_when
 %@ > > print_entity
-%@     c(58,player_no,1)
-%@     c(58,type,player)
+%@     c(36,player_no,1)
+%@     c(36,type,player)
 %@ > print_entities_when
-%@ P_EID = 58.
+%@ P_EID = 36.
 
 
 %% ?- init,
@@ -225,41 +223,51 @@ init :-
 %%    destroy_unit(U_EID),
 %%    print_entities_when([EID, Group]>>(\+ member(c(_, type, class), Group) ,
 %%                                       \+ member(c(_, type, template), Group))).
+%@ create_abil move 37 _158860 
+%@ c_abil_move abil_init
+%@ c_abil abil_init
 %@ > print_entities_when
 %@ > > print_entity
-%@     c(59,weapons,[61])
-%@     c(59,abils,[60])
-%@     c(59,speed,7)
-%@     c(59,energy_max,0)
-%@     c(59,energy,0)
-%@     c(59,life_max,500)
-%@     c(59,life,500)
-%@     c(59,bounds,2)
-%@     c(59,order_queue,[])
-%@     c(59,player_no,1)
-%@     c(59,position,10-20)
-%@     c(59,template,test_unit)
-%@     c(59,type,unit)
+%@     c(37,weapons,[39])
+%@     c(37,abils,[38])
+%@     c(37,cooldown,0)
+%@     c(37,speed,7)
+%@     c(37,energy_max,0)
+%@     c(37,energy,0)
+%@     c(37,life_max,500)
+%@     c(37,life,500)
+%@     c(37,bounds,2)
+%@     c(37,order_queue,[])
+%@     c(37,player_no,1)
+%@     c(37,position,10-20)
+%@     c(37,template,test_unit)
+%@     c(37,type,unit)
 %@ > > print_entity
-%@     c(61,time_point,0)
-%@     c(61,cooldown,0)
-%@     c(61,owner_id,59)
-%@     c(61,template,bear_claws)
-%@     c(61,type,weapon)
+%@     c(39,time_point,0)
+%@     c(39,cooldown,0)
+%@     c(39,owner_id,37)
+%@     c(39,template,bear_claws)
+%@     c(39,type,weapon)
+%@     c(39,cooldown,0)
 %@ > > print_entity
-%@     c(60,cooldown,0)
-%@     c(60,owner_id,59)
-%@     c(60,template,move)
-%@     c(60,type,abil)
+%@     c(38,cooldown,0)
+%@     c(38,owner_id,37)
+%@     c(38,template,move)
+%@     c(38,type,abil)
 %@ > > print_entity
-%@     c(58,player_no,1)
-%@     c(58,type,player)
+%@     c(36,cooldown,0)
+%@     c(36,player_no,1)
+%@     c(36,type,player)
+%@ destroy_abil 38 
+%@ c_abil_move abil_fini
+%@ c_abil abil_fini
 %@ > print_entities_when
 %@ > > print_entity
-%@     c(58,player_no,1)
-%@     c(58,type,player)
-%@ P_EID = 58,
-%@ U_EID = 59.
+%@     c(36,cooldown,0)
+%@     c(36,player_no,1)
+%@     c(36,type,player)
+%@ P_EID = 36,
+%@ U_EID = 37.
 
 %% ----- I founda problem, currently it is not easy to call super  -----
 

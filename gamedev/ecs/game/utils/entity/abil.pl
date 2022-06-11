@@ -1,24 +1,27 @@
-%% TODO: Ideally All the cross-reference in class, template and entity, should sue EID instead of name.
+
+%% I currently decide to not treat class as an entity and no C_EID.
+%% N.B.
+%% If class also an entity, then template should use C_EID instead of class name,
+%% then someone would say that all templates' occurrences should use T_EID and so on.
+%% This would make database very unreadable and not easy for prototype development.
 
 %% create_abil
 c(T_EID, type, template)             # passive,
 c(T_EID, catalog, abil)              # passive,
 c(T_EID, id, Tempalte)               # passive,
-c(T_EID, class, Class)               # passive, % TODO: It is better c(T_EID, class, Class) is c(T_EID, class_eid, C_EID)
-c(C_EID, type, class)                # passive,
-c(C_EID, id, Class)                  # passive
+c(T_EID, class, Class)               # passive
 \
 create_abil(Tempalte, OwnerID, EID)           ,
 next_e(EID0)                         # passive
 <=>
-  %% format("create_abil ~w ~w ~w ~n", [Tempalte, OwnerID, EID]),  
+  format("create_abil ~w ~w ~w ~n", [Tempalte, OwnerID, EID]),  
   EID=EID0,
   NextEID is EID0+1, next_e(NextEID),   
   c(EID, type, abil),
   c(EID, template, Tempalte),  
   c(EID, owner_id, OwnerID),
-  %% TODO: Is just e(abil_init, Class, Template, EID) is enough?
-  e(abil_init, C_EID, T_EID, EID),
+  %% abil_init(Class, T_EID, EID),
+  e(abil_init, Class, T_EID, A_EID),
   true.
 
 create_abil(Tempalte, OwnerID, EID) <=> true.
@@ -29,14 +32,12 @@ c(A_EID, template, Tempalte) # passive,
 c(T_EID, type, template)     # passive,
 c(T_EID, catalog, abil)      # passive,
 c(T_EID, id, Tempalte)       # passive,
-c(T_EID, class, Class)       # passive,
-c(C_EID, type, class)        # passive,
-c(C_EID, id, Class)          # passive
+c(T_EID, class, Class)       # passive
 \
 destroy_abil(A_EID)
 <=>
-  %% format("destroy_abil ~w ~n", [A_EID]),    
-  e(abil_fini, C_EID, T_EID, A_EID),
+  format("destroy_abil ~w ~n", [A_EID]),    
+  e(abil_fini, Class, T_EID, A_EID),
   remove_component(A_EID, type),
   remove_component(A_EID, template),
   remove_component(A_EID, owner_id),  

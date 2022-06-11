@@ -1,18 +1,12 @@
 
 %% abil_init
-c(C_EID, type, class)             # passive,
-c(C_EID, id, c_abil)              # passive
-\
-e(abil_init, C_EID, T_EID, A_EID)
+e(abil_init, c_abil, T_EID, A_EID)
 <=>
-  %% format("c_abil abil_init~n"),
+  format("c_abil abil_init~n"),
   true.
 
 %% abil_fini
-c(C_EID, type, class)             # passive,
-c(C_EID, id, c_abil)              # passive
-\
-e(abil_fini, C_EID, T_EID, A_EID)
+e(abil_fini, c_abil, T_EID, A_EID)
 <=>
   format("c_abil abil_fini~n"),  
   true.
