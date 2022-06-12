@@ -4,7 +4,9 @@ next_e(EID0) # passive <=>
   EID=EID0,
   NextEID is EID0+1, next_e(NextEID),
   c(EID, type, player),
-  c(EID, player_no, PlayerNo).
+  c(EID, player_no, PlayerNo),
+  c(EID, position, pos(0,0)),
+  true.
 
 c(EID, type, player) # passive
 \

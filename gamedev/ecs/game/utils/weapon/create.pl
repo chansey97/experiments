@@ -1,26 +1,32 @@
 
-%% create_weapon
 c(T_EID, type, template)             # passive,
 c(T_EID, catalog, weapon)            # passive,
 c(T_EID, id, Tempalte)               # passive,
 c(T_EID, class, Class)               # passive
 \
-create_weapon(Template, OwnerID, EID),
-next_e(EID0) # passive
+create_weapon(Template, OwnerID, EID)
 <=>
-  EID=EID0,
-  NextEID is EID0+1, next_e(NextEID),
+  format("create_weapon ~w ~w ~w ~n", [Tempalte, OwnerID, EID]),
+  create_e(EID),
   c(EID, type, weapon),
   c(EID, template, Template),
   c(EID, owner_id, OwnerID),  
-  e(weapon_init, Class, T_EID, EID).
+  weapon_on_create(Class, T_EID, EID),
+  true.
 
 create_weapon(Tempalte, OwnerID, EID) <=> true.
 
+%% -- dispatch --
 
+weapon_on_create(c_weapon, T_EID, W_EID)
+<=>
+  format("weapon_on_create c_weapon~n"),
+  true.
 
-%% e(weapon_init, c_weapon_legacy, T_EID, W_EID)
-%% <=>
-%%   e(weapon_init, c_weapon, T_EID, A_EID),  
-%%   c(W_EID, cooldown, 0),
-%%   c(W_EID, time_point, 0).
+weapon_on_create(c_weapon_legacy, T_EID, W_EID)
+<=>
+  format("weapon_on_create c_weapon_legacy~n"),
+  c(W_EID, cooldown, 0),
+  c(W_EID, time_point, 0),
+  true.
+

@@ -1,64 +1,51 @@
 
-%% %% target of order can be
-%% %% target(point, Point), target(unit, UnitID), no_target
-%% unit_issue_order @
-%% c(UID, type, unit) # passive % TODO: check alive
-%% \
-%% unit_issue_order(UID, order(AbilTemplate, AbilTarget))
-%% <=>
-%%   c(UID, next_order_abil, AbilTemplate),
-%%   c(UID, next_order_abil_target, AbilTarget), 
-%%   c(UID, event_unit_issue_order, c_unit)
+%% Order is
+%% order(AbilTempalte, AbilTarget)
 
-%%   %% TODO:
-%%   %% Two options for event component:
-%%   %% 1. (Currently)remove event in the event handle system
-%%   %% 2. remove event in the event posteradd event sender? advangtage is event handle can see all the events and have no to remove them 
-%%   %% CHR is too powerful, a rule can see constraints on call stack!
-  
-%%   %% remove_component(UID, next_order_abil),
-%%   %% remove_component(UID, next_order_abil_target),
-%%   %% remove_component(UID, next_order_abil_target),  
-%%   .
+%% AbilTarget can be
+%% target(point, Point), this is kind of location
+%% target(unit, UnitID),
+%% no_target
+
+%% AbilSource can be
+%% source(player, PlayerID)
+%% source(unit, UnitID)
 
 
+c(U_EID, type, unit)         # passive, % TODO: check alive
+c(U_EID, template, Tempalte) # passive,
+c(T_EID, type, template)     # passive,
+c(T_EID, catalog, unit)      # passive,
+c(T_EID, id, Tempalte)       # passive,
+c(T_EID, class, Class)       # passive
+\
+unit_issue_order(U_EID, Order)
+<=>
+  %% c(U_EID, next_order_abil, AbilTemplate),
+  %% c(U_EID, next_order_abil_target, AbilTarget), 
+  %% c(U_EID, event_unit_issue_order, c_unit),
+  format("unit_issue_order ~w ~w ~n", [U_EID, Order]),
+  unit_on_issue_order(c_unit, T_EID, U_EID, Order),
+  true .
 
-%% %% on start abil
+unit_issue_order(U_EID, Order) <=> true.
 
-%% %% abil's workflow:
-%% %% event_unit_start_abil with c_abil_morph
-%% %% -> event_abil_morph_check -> event_abil_check
-%% %% -> event_abil_morph_execute
+%% -- dispatch --
 
-%% %% event_unit_start_abil with c_abil_effect_instant
-%% %% -> event_abil_effect_instant_check -> event_abil_effect_check -> event_abil_check
-%% %% -> event_abil_effect_instant_execute
+c(U_EID, abils, A_EIDs) # passive,
+c(A_EID, type, abil) # passive,
+c(A_EID, template, AbilTemplate) # passive
+\
+unit_on_issue_order(c_unit, T_EID, U_EID, order(AbilTemplate, AbilTarget))
+<=>
+  memberchk(A_EID, A_EIDs),
+  abil_check(A_EID, AbilTarget)
+  |
+  format("unit_on_issue_order c_unit~n"),
+  abil_execute(A_EID, AbilTarget),  
+  true.
 
-%% %% TODO:
-%% %% If a abil requrie a target, the target_id will be a component already attached in abil entity
-
-%% c_unit_issue_order @
-%% c(UID, type, unit) # passive,
-%% c(UID, abils, AIDs) # passive,
-%% c(AID, type, abil) # passive,
-%% c(AID, template, AbilTemplate) # passive
-%% \
-%% c(UID, next_order_abil, AbilTemplate) # passive,
-%% c(UID, next_order_abil_target, AbilTarget) # passive,
-%% c(UID, event_unit_issue_order, c_unit)
-%% <=>
-%%   memberchk(AID, AIDs),
-%%   abil_check(AID, AbilTarget)
-%%   |
-%%   abil_execute(AID, AbilTarget).
-
-%% %% c_unit_issue_order_cleanup @
-%% %% c(UID, next_order_abil, AbilTemplate) # passive,
-%% %% c(UID, next_order_abil_target, AbilTarget) # passive,
-%% %% c(UID, event_unit_issue_order, c_unit)
-%% %% <=>
-%% %%   true.
-
+unit_on_issue_order(c_unit, _, _, _) <=> true.
 
 
 

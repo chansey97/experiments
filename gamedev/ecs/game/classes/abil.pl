@@ -47,9 +47,9 @@ class(id = c_abil_effect, super = c_abil,
        field(name = cost_cooldown,
              pred = number,
              default = 0),
-       field(name = effects,
-             pred = is_list,
-             default = [])
+       field(name = effect,
+             pred = atom,
+             default = null)
       ]).
 
 class(id = c_abil_effect_instant, super = c_abil_effect,

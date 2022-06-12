@@ -22,9 +22,9 @@ class(id = c_unit, super = null,
              pred = number,
              default = 0),
        field(name = abils,
-             pred = is_list,
+             pred = is_set,
              default = []),
        field(name = weapons,
-             pred = is_list,
+             pred = is_set,
              default = [])
       ]).

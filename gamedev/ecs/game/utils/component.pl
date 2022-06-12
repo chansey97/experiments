@@ -4,6 +4,21 @@
 %% next_e(EID0) #passive \ get_next_e(EID) <=> EID = EID0.
 %% get_next_e(EID) <=> false.
 
+create_e(EID), next_e(EID0) # passive <=>
+  EID=EID0,
+  NextEID is EID0+1,
+  next_e(NextEID),
+  e(EID).
+
+destroy_e(EID), e(EID) # passive <=>
+  %% TODO: necessary to delete all related components?
+  %% I think it is not necessary, because if there are entities's depends,
+  %% it is better to delete components at the high level, although delete here can be seen
+  %% some kind of protection.
+  %% Other workaround is learning database system's cascading delete,
+  %% which is necessary to further explore.
+  true.  
+
 %% TODO:
 %% c(EID, Component, Value) should not be called as component
 %% It should be called entity_component relation.

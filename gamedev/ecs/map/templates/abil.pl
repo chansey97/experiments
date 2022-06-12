@@ -29,7 +29,7 @@ template(catalog = abil, id = self_heal,
           parent = t_abil_effect_instant],     
          [name = "Self Heal",
           transient = true,          
-          effects = [self_heal_modify_unit]
+          effect = self_heal_modify_unit
          ]).
 
 template(catalog = abil, id = psi_storm,
@@ -40,6 +40,6 @@ template(catalog = abil, id = psi_storm,
           cost_cooldown = 3,
           transient = false,          
           range = 7,
-          effects = [psi_storm_persistent]
+          effect = psi_storm_persistent
          ]).
 

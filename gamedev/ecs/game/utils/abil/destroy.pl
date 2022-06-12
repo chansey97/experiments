@@ -1,5 +1,4 @@
 
-%% destroy_abil
 c(A_EID, type, abil)         # passive,
 c(A_EID, template, Tempalte) # passive,
 c(T_EID, type, template)     # passive,
@@ -10,71 +9,67 @@ c(T_EID, class, Class)       # passive
 destroy_abil(A_EID)
 <=>
   format("destroy_abil ~w ~n", [A_EID]),    
-  e(abil_fini, Class, T_EID, A_EID),
+  abil_on_destroy(Class, T_EID, A_EID),
   remove_component(A_EID, type),
   remove_component(A_EID, template),
-  remove_component(A_EID, owner_id),  
+  remove_component(A_EID, owner_id),
+  destroy_e(A_EID),  
   true.
 
 destroy_abil(A_EID) <=> true.
 
+%% -- dispatch --
 
-/*** polymorphic dispatch ***/
+abil_on_destroy(c_abil, T_EID, A_EID)
+<=>
+  format("abil_on_destroy c_abil~n"),
+  true.
 
-%% e(abil_fini, c_abil, T_EID, A_EID)
-%% <=>
-%%   format("c_abil abil_fini~n"),  
-%%   true.
+abil_on_destroy(c_abil_move, T_EID, A_EID)
+<=>
+  format("abil_on_destroy c_abil_move~n"),
+  remove_component(A_EID, cooldown),
+  abil_on_destroy(c_abil, T_EID, A_EID),
+  true.
 
-%% e(abil_fini, c_abil_move, T_EID, A_EID)
-%% <=>
-%%   format("c_abil_move abil_fini~n"),  
-%%   remove_component(A_EID, cooldown),
-%%   e(abil_fini, c_abil, T_EID, A_EID).
+abil_on_destroy(c_abil_attack, T_EID, A_EID)
+<=>
+  format("abil_on_destroy c_abil_attack~n"),
+  remove_component(A_EID, cooldown),
+  abil_on_destroy(c_abil, T_EID, A_EID),
+  true.
 
-%% c_abil_attack_destroy @
-%% c(EID, template, Template) # passive
-%% \
-%% c(EID, event_abil_destroy, c_abil_attack)
-%% <=>
-%%   remove_component(EID, cooldown).
+abil_on_destroy(c_abil_keyboard_move, T_EID, A_EID)
+<=>
+  format("abil_on_destroy c_abil_keyboard_move~n"),
+  abil_on_destroy(c_abil, T_EID, A_EID),
+  true.
 
-%% c_abil_keyboard_move_destroy @
-%% c(EID, template, Template) # passive
-%% \
-%% c(EID, event_abil_destroy, c_abil_keyboard_move)
-%% <=>
-%%   true.
+abil_on_destroy(c_abil_effect, T_EID, A_EID)
+<=>
+  format("abil_on_destroy c_abil_effect~n"),
+  remove_component(A_EID, cooldown),
+  abil_on_destroy(c_abil, T_EID, A_EID),
+  true.
 
-%% c_abil_effect_destroy @
-%% c(EID, template, Template) # passive
-%% \
-%% c(EID, event_abil_destroy, c_abil_effect)
-%% <=>
-%%   remove_component(EID, cooldown).
+abil_on_destroy(c_abil_effect_instant, T_EID, A_EID)
+<=>
+  format("abil_on_destroy c_abil_effect_instant~n"),
+  abil_on_destroy(c_abil_effect, T_EID, A_EID),
+  true.
 
-%% c_abil_effect_instant:event_abil_destroy @
-%% c(EID, template, Template) # passive
-%% \
-%% c(EID, event_abil_destroy, c_abil_effect_instant)
-%% <=>
-%%   sub_class(c_abil_effect_instant, SuperClass),
-%%   c(EID, event_abil_destroy, SuperClass).
+abil_on_destroy(c_abil_effect_target, T_EID, A_EID)
+<=>
+  format("abil_on_destroy c_abil_effect_target~n"),
+  abil_on_destroy(c_abil_effect, T_EID, A_EID),
+  true.
 
-%% c_abil_effect_target:event_abil_destroy @
-%% c(EID, template, Template) # passive
-%% \
-%% c(EID, event_abil_destroy, c_abil_effect_target)
-%% <=>
-%%   sub_class(c_abil_effect_target, SuperClass),
-%%   c(EID, event_abil_destroy, SuperClass).
-
-%% c_abil_morph_destroy @
-%% c(EID, template, Template) # passive
-%% \
-%% c(EID, event_abil_destroy, c_abil_morph)
-%% <=>
-%%   remove_component(EID, cooldown).
+abil_on_destroy(c_abil_morph, T_EID, A_EID)
+<=>
+  format("abil_on_destroy c_abil_morph~n"),
+  remove_component(A_EID, cooldown),
+  abil_on_destroy(c_abil, T_EID, A_EID),
+  true.
 
 
 

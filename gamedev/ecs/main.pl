@@ -14,16 +14,16 @@
   %% template_field_value_get/4,
   
   next_e/1,
-  %% get_next_e/1,  
+  e/1,
+  create_e/1,
+  destroy_e/1,
   c/2,  
   c/3,
   c/4,
   c/5,
-  e/3,
-  e/4,  
   update/2,
 
-  get_components/2, one_c/1, collect_c/1,  
+  get_components/2, one_c/1, collect_c/1,
   set_component/3,
   remove_component/2,
   %% check_component/3,
@@ -34,32 +34,45 @@
   %% create_template/2,
   create_template/4,
   
-  create_unit/5,
-  destroy_unit/1,
-  replace_unit_template/2,
-  unit_issue_order/2,
-  
-  create_abil/3,
-  destroy_abil/1,
-  abil_check/2,
-  abil_execute/2,
-  abil_cancel/1,  
-  
-  create_weapon/3,
-  destroy_weapon/1,
-  
-  create_effect/4,
-  destroy_effect/1,
-
-  %% no need point entity, because it is just a editor preset
-  %% in runtime, it is a point record  
-  %% create_point/3,
-  %% destroy_point/1,
-  
   create_player/2,
   destroy_player/1,  
-  player_control_unit/2
+  player_control_unit/2,
+  
+  create_abil/3,
+  destroy_abil/1,  
+  abil_on_create/3,
+  abil_on_destroy/3,  
+
+  abil_check/2,
+  abil_execute/2,
+  abil_cancel/1,
+  abil_on_check/4,
+  abil_on_execute/2,
+  %% abil_on_cancel/2,  
+
+  create_weapon/3,
+  weapon_on_create/3,
+  destroy_weapon/1,
+  weapon_on_destroy/3,
+
+  create_effect/4,
+  destroy_effect/1,
+  check_effect/3,
+  effect_on_create/3,
+  effect_on_destroy/3,
+  effect_on_check/4,
+  
+  create_unit/5, 
+  destroy_unit/1,
+  unit_issue_order/3,  
+  unit_on_issue_order/4,  
+  unit_on_create/3,   
+  unit_on_destroy/3,
+  
+  replace_unit_template/2,
+  unit_issue_order/2
   .
+
 :- dynamic raw_template/4, raw_template_field/4.
 
 %% Classes
@@ -95,8 +108,8 @@
 :- include("./game/utils/weapon/destroy.pl").
 
 :- include("./game/utils/effect/create.pl").
+:- include("./game/utils/effect/check.pl").
 :- include("./game/utils/effect/destroy.pl").
-:- include("./game/utils/effect/start.pl").
 
 
 %% Systems
@@ -122,7 +135,6 @@
 init :-
   load_raw_templates("./map/templates"),
   next_e(10),
-
   load_templates.
 
 %% ?- load_raw_templates("./map/templates"),
@@ -149,9 +161,9 @@ init :-
 %%    destroy_abil(A_EID),
 %%    print_entities_when([EID, Group]>>(\+ member(c(_, type, class), Group) ,
 %%                                       \+ member(c(_, type, template), Group))).
-%@ create_abil move 0 _86494 
-%@ c_abil_move abil_init
-%@ c_abil abil_init
+%@ create_abil move 0 _94780 
+%@ abil_on_create c_abil_move
+%@ abil_on_create c_abil
 %@ > print_entities_when
 %@ > > print_entity
 %@     c(36,cooldown,0)
@@ -159,11 +171,10 @@ init :-
 %@     c(36,template,move)
 %@     c(36,type,abil)
 %@ destroy_abil 36 
-%@ c_abil_move abil_fini
-%@ c_abil abil_fini
+%@ abil_on_destroy c_abil_move
+%@ abil_on_destroy c_abil
 %@ > print_entities_when
 %@ A_EID = 36.
-
 
 %% ?- init,
 %%    create_weapon(bear_claws, 0, W_EID),
@@ -172,6 +183,8 @@ init :-
 %%    destroy_weapon(W_EID),
 %%    print_entities_when([EID, Group]>>(\+ member(c(_, type, class), Group) ,
 %%                                       \+ member(c(_, type, template), Group))).
+%@ create_weapon bear_claws 0 _100222 
+%@ weapon_on_create c_weapon_legacy
 %@ > print_entities_when
 %@ > > print_entity
 %@     c(36,time_point,0)
@@ -179,8 +192,12 @@ init :-
 %@     c(36,owner_id,0)
 %@     c(36,template,bear_claws)
 %@     c(36,type,weapon)
+%@ destroy_weapon 36 
+%@ weapon_on_destroy c_weapon_legacy
+%@ weapon_on_destroy c_weapon
 %@ > print_entities_when
 %@ W_EID = 36.
+
 
 %% ?- init,
 %%    create_effect(bear_claws_damage, 0, 0, E_EID),
@@ -218,14 +235,17 @@ init :-
 %%    destroy_unit(U_EID),
 %%    print_entities_when([EID, Group]>>(\+ member(c(_, type, class), Group) ,
 %%                                       \+ member(c(_, type, template), Group))).
-%@ create_abil move 37 _158860 
-%@ c_abil_move abil_init
-%@ c_abil abil_init
+%@ create_unit test_unit 10 20 1 _182742
+%@ unit_on_create c_unit
+%@ create_abil move 37 _185100 
+%@ abil_on_create c_abil_move
+%@ abil_on_create c_abil
+%@ create_weapon bear_claws 37 _186942 
+%@ weapon_on_create c_weapon_legacy
 %@ > print_entities_when
 %@ > > print_entity
 %@     c(37,weapons,[39])
 %@     c(37,abils,[38])
-%@     c(37,cooldown,0)
 %@     c(37,speed,7)
 %@     c(37,energy_max,0)
 %@     c(37,energy,0)
@@ -234,7 +254,7 @@ init :-
 %@     c(37,bounds,2)
 %@     c(37,order_queue,[])
 %@     c(37,player_no,1)
-%@     c(37,position,10-20)
+%@     c(37,position,pos{x:10,y:20})
 %@     c(37,template,test_unit)
 %@     c(37,type,unit)
 %@ > > print_entity
@@ -243,26 +263,30 @@ init :-
 %@     c(39,owner_id,37)
 %@     c(39,template,bear_claws)
 %@     c(39,type,weapon)
-%@     c(39,cooldown,0)
 %@ > > print_entity
 %@     c(38,cooldown,0)
 %@     c(38,owner_id,37)
 %@     c(38,template,move)
 %@     c(38,type,abil)
 %@ > > print_entity
-%@     c(36,cooldown,0)
 %@     c(36,player_no,1)
 %@     c(36,type,player)
+%@ destroy_unit 37 
+%@ unit_on_destroy c_unit
 %@ destroy_abil 38 
-%@ c_abil_move abil_fini
-%@ c_abil abil_fini
+%@ abil_on_destroy c_abil_move
+%@ abil_on_destroy c_abil
+%@ destroy_weapon 39 
+%@ weapon_on_destroy c_weapon_legacy
+%@ weapon_on_destroy c_weapon
 %@ > print_entities_when
 %@ > > print_entity
-%@     c(36,cooldown,0)
 %@     c(36,player_no,1)
 %@     c(36,type,player)
 %@ P_EID = 36,
 %@ U_EID = 37.
+
+
 
 %% ----- I founda problem, currently it is not easy to call super  -----
 
