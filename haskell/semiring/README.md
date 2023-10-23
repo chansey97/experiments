@@ -41,39 +41,18 @@ Remark. I'm uncertain the implications of these two definitions on practical pro
 
 Many articles on closed semiring claimed that asteration can be used to invert a matrix. This is only partially true. For instances,
 
-$S = \begin{bmatrix}
-2 & 1 \\
-4 & 2 \\
-\end{bmatrix}$ is singular,  $(I-A)*$ gives you $A = \begin{bmatrix}
-∞ & ∞ \\
-∞ & ∞ \\
-\end{bmatrix}$.
+$S = \begin{bmatrix} 2 & 1 \\ 4 & 2 \\
+\end{bmatrix}$ is singular,  $(I-A)*$ gives you $A = \begin{bmatrix} ∞ & ∞ \\ ∞ & ∞ \\ \end{bmatrix}$.
 
-$A = \begin{bmatrix}
-0 & 15 & 3 \\
-28 & 7 & 2 \\
-5 & 1 & 0
-\end{bmatrix}$ is invertible, but $(I-A)*$ gives you $\begin{bmatrix}
-∞ & ∞ & ∞ \\
-∞ & ∞ & ∞ \\
-∞ & ∞ & ∞
-\end{bmatrix}$ as well.
+$A = \begin{bmatrix} 0 & 15 & 3 \\ 28 & 7 & 2 \\ 5 & 1 & 0 \end{bmatrix}$ is invertible, but $(I-A)*$ gives you $\begin{bmatrix} ∞ & ∞ & ∞ \\ ∞ & ∞ & ∞ \\ ∞ & ∞ & ∞ \end{bmatrix}$ as well.
 
 The problem is that computing asteration of a matrix won't automatically permute the pivots. To perform this correctly, you have to calculate a permutation matrix $P$ beforehand:
 
-$P = \begin{bmatrix}
-0 & 1 & 0 \\
-0 & 0 & 1 \\
-1 & 0 & 0
-\end{bmatrix}$, $P \cdot A = \begin{bmatrix}
+$P = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & 0 & 0 \end{bmatrix}$, $P \cdot A = \begin{bmatrix}
 28 & 7 & 2 \\
 5 & 1 & 1 \\
 0 & 15 & 3
-\end{bmatrix}$, $A^{-1} = (I-PA)* \cdot P  =  \begin{bmatrix}
--0.0155039 & 0.0232558 & 0.0697674 \\
-0.0775194 & -0.116279 & 0.651163 \\
--0.0542636 & 0.581395 & -3.25581
-\end{bmatrix}$
+\end{bmatrix}$, $A^{-1} = (I-PA)* \cdot P  =  \begin{bmatrix} -0.0155039 & 0.0232558 & 0.0697674 \\ 0.0775194 & -0.116279 & 0.651163 \\ -0.0542636 & 0.581395 & -3.25581 \end{bmatrix}$
 
 This subtle issue was not mentioned in [A Very General Method of Computing Shortest Paths](http://r6.ca/blog/20110808T035622Z.html) and [Fun with semirings](https://web.archive.org/web/20160305153614id_/http://www.cl.cam.ac.uk/~sd601/papers/semirings.pdf).
 
