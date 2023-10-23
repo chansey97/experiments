@@ -91,9 +91,6 @@ exampleGraph3 = matrix exampleEdgeList3
 --unreach unreach unreach unreach unreach unreach 1
 --unreach unreach unreach unreach unreach unreach unreach
 
--- 对角线是 0, 说明了没有环, 因为这个 0 实际上是 I <+> R+ 的 I
--- 如果有环, 则对角线元素就会有 Distence 从而 star 后变成了 inf
-
 --λ> printMatrix . star . fmap (maybe zero LDistance) $ exampleGraph3
 --0       unreach unreach 1       2       3       4
 --unreach 0       1       2       3       4       5
