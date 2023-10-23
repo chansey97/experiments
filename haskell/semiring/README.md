@@ -60,7 +60,7 @@ $$ S = \begin{bmatrix}
 4 & 2 \\
 \end{bmatrix} $$
 
-is singular, and 
+is singular, then 
 
 $$ S^{-1} = (I-S)^{*} = \begin{bmatrix} 
 ∞ & ∞ \\
