@@ -1,4 +1,4 @@
-module A_Very_General_Method_Of_Computing_Shortest_Paths.Applications.App2_FloydWarshall where
+module A_Very_General_Method_Of_Computing_Shortest_Paths.Applications.App2_ShortestPaths where
 
 import Data.Array
 import Data.Maybe
