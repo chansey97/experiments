@@ -36,7 +36,7 @@ a^{\star} = \begin{cases}
 \end{cases}
 ```
 
-and $u + a = a + u = u$, $0 \cdot a = a \cdot 0=0$, $a \cdot ∞ = ∞ \cdot a=∞ \ {{\mathrm{if}\ a\neq 0}}$.
+and $∞  + a = a + ∞  = ∞$, $0 \cdot a = a \cdot 0=0$, $a \cdot ∞ = ∞ \cdot a=∞ \ {{\mathrm{if}\ a\neq 0}}$.
 
 [Wikipedia](https://en.wikipedia.org/wiki/Semiring), [[3]](#3), [[4]](#4), and [[5]](#5) use this definition.
 
