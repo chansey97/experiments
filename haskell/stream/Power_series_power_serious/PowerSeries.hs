@@ -145,11 +145,11 @@ fib = 0 : 1 : zipWith (+) fib (tail fib)
 -- > head/tail decomposition of power series maps naturally into the head/tail decomposition of lists.
 -- > F(x) = f0 + x F1(x)
 
--- 得到:
--- 注意：zipWith (+) fib (tail fib) 里,
+-- 得到: F(x) = 0 + x + x^2 F(x) + x F(x)
+-- 注意：在 zipWith (+) fib (tail fib) 里,
 -- 第一个 fib 需要向右平移两位, 正好加到第 3 个位置, 因此是 x^2 F(x)
 -- 第二个 tail fib 只需要向右平移一位，因为 (tail fib) 本质上使 fib 向左平移了一位, 然后再加到第 3 个位置, 因此是 x^2 (1/x) F(x) = x F(X)
--- F(x) = 0 + x + x^2 F(x) + x F(x)
+
 
 -- 移项化简：
 -- F(x) = x / (1 - x - x^2)
