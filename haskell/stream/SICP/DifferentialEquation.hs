@@ -10,8 +10,8 @@ integral integrand initial_value dt = int where
   int = initial_value : zipWith (+) (scale integrand dt) int
 
 --integral :: [Double] -> Double -> Double -> [Double]
---integral integrand initial_value dt = scanl (+) initial_value scaled where
---  scaled = map (\x -> x * dt) integrand
+--integral integrand initial_value dt = int where
+--  int = scanl (+) initial_value (scale integrand dt)
 
 -- λ> take 10 $ integral [1..4] 0 1
 -- [0.0,1.0,3.0,6.0,10.0]
@@ -20,8 +20,8 @@ integral integrand initial_value dt = int where
 ---- Solving y' = f(y), the initial condition y(0) = y0
 
 -- Nice, thanks Haskell!
--- 1. dy is thunked by default, we don't have to delay explicitly lick SICP
--- 2. we don't have to change the integral implementation lick SICP
+-- 1. dy is thunked by default, we don't have to delay explicitly like SICP
+-- 2. we don't have to change the integral implementation like SICP
 solve :: (Double -> Double) -> Double -> Double -> [Double]
 solve f y0 dt = y where
   y = integral dy y0 dt
