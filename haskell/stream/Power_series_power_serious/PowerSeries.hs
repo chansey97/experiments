@@ -26,8 +26,8 @@ instance (Num a, Eq a) => Num [a] where
   negate (f:fs) = (negate f) : (negate fs)
   (f:fs) + (g:gs) = f+g : fs+gs
   (f:fs) * (g:gs) = f*g : (f.*gs + fs*(g:gs))
-  signum _ = error "signum not implemented for Num [a]"
-  abs _ = error "abs not implemented for Num [a]"
+  signum _ = undefined
+  abs _ = undefined
 
 -- 级数的除法
 instance (Fractional a, Eq a) => Fractional [a] where
@@ -74,19 +74,19 @@ instance (Fractional a, Eq a) => Floating [a] where
   sqrt (0:0:fs) = 0 : sqrt fs
   sqrt (1:fs) = qs where
     qs = 1 + integral((deriv (1:fs))/(2.*qs))
-  pi = error "pi not implemented for Floating [a]"
-  exp = error "exp not implemented for Floating [a]"
-  log = error "log not implemented for Floating [a]"
-  sin = error "sin not implemented for Floating [a]"
-  cos = error "cos not implemented for Floating [a]"
-  asin = error "asin not implemented for Floating [a]"
-  acos = error "acos not implemented for Floating [a]"
-  atan = error "atan not implemented for Floating [a]"
-  sinh = error "sinh not implemented for Floating [a]"
-  cosh = error "cosh not implemented for Floating [a]"
-  asinh = error "asinh not implemented for Floating [a]"
-  acosh = error "acosh not implemented for Floating [a]"
-  atanh = error "atanh not implemented for Floating [a]"
+  pi = undefined
+  exp = undefined
+  log = undefined
+  sin = undefined
+  cos = undefined
+  asin = undefined
+  acos = undefined
+  atan = undefined
+  sinh = undefined
+  cosh = undefined
+  asinh = undefined
+  acosh = undefined
+  atanh = undefined
 
 ---- tests
 

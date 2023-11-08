@@ -58,12 +58,12 @@ solve_2nd a b y0 dy0 dt= y where
 -- Solved: y(t) = (5 e^t)/4 - 1/4 e^(-3 t), see https://www.wolframalpha.com/input?i2d=true&i=y%27%27+%2B+2y%27+-+3y+%3D+0%5C%2844%29++y%5C%2840%290%5C%2841%29%3D1%5C%2844%29+y%27%5C%2840%290%5C%2841%29%3D2
 -- y(1) = 3.3854
 
-solve_2nd_y :: Double -> Double
-solve_2nd_y t = solve_2nd (-2) 3 1 2 dt !! round (t*precision) where
+solved_2nd_y :: Double -> Double
+solved_2nd_y t = solve_2nd (-2) 3 1 2 dt !! round (t*precision) where
   precision = 10000.0
   dt = 1/precision
 
--- λ> solve_2nd_y 1
+-- λ> solved_2nd_y 1
 -- 3.385241242344665
 
 
@@ -80,12 +80,12 @@ solve_2nd_generic f y0 dy0 dt= y where
 -- Solved: y(t) = (5 e^t)/4 - 1/4 e^(-3 t), see https://www.wolframalpha.com/input?i2d=true&i=y%27%27+%2B+2y%27+-+3y+%3D+0%5C%2844%29++y%5C%2840%290%5C%2841%29%3D1%5C%2844%29+y%27%5C%2840%290%5C%2841%29%3D2
 -- y(1) = 3.3854
 
-solve_2nd_generic_y :: Double -> Double
-solve_2nd_generic_y t = solve_2nd_generic (\dy y -> -2*dy + 3*y) 1 2 dt !! round (t*precision) where
+solved_2nd_generic_y :: Double -> Double
+solved_2nd_generic_y t = solve_2nd_generic (\dy y -> -2*dy + 3*y) 1 2 dt !! round (t*precision) where
   precision = 10000.0
   dt = 1/precision
 
--- λ> solve_2nd_generic_y 1
+-- λ> solved_2nd_generic_y 1
 -- 3.385241242344665
 
 -- Correct and cool!
