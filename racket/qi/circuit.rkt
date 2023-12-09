@@ -21,9 +21,9 @@
     (stream-cons init s)))
 
 (define (fb f)
-  (λ as
+  (λ ass
     (letrec-values ([(cs bss) (call-with-values
-                               (λ () (apply f (cons (stream-lazy cs) as)))
+                               (λ () (apply f (cons (stream-lazy cs) ass)))
                                (λ (cs . bss) (values cs bss)))])
       (apply values bss))))
 
