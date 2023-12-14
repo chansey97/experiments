@@ -8,45 +8,45 @@
 ;; SICP 3.5.3 Exploiting the Stream Paradigm
 ;; 
 ;; <<figure-3.32>> The ~integral~ procedure viewed as a signal-processing system.
-;;
-;;                              initial-value
-;;                                   |
-;;        +-----------+              |   |\__
-;; input  |           |      |\__    +-->|   \_  integral
-;; ------>| scale: dt +----->|   \_      |cons_>--*------->
-;;        |           |      | add_>---->| __/    |
-;;        +-----------+  +-->| __/       |/       |
-;;                       |   |/                   |
-;;                       |                        |
-;;                       +------------------------+
-;;
+;;  
+;;                               initial-value
+;;                                    |
+;;         +-----------+              |   |\__
+;;  input  |           |      |\__    +-->|   \_  integral
+;;  ------>| scale: dt +----->|   \_      |cons_>--*------->
+;;         |           |      | add_>---->| __/    |
+;;         +-----------+  +-->| __/       |/       |
+;;                        |   |/                   |
+;;                        |                        |
+;;                        +------------------------+
+;;  
 
 ;; SICP 3.5.4 Streams and Delayed Evaluation
 ;;
 ;; <<figure-3.34>> An "analog computer circuit" that solves the equation dy/dt = f(y).
-;;
-;;                             y_0
-;;                              |
-;;                              V
-;;     +----------+  dy   +----------+     y
-;; +-->|  map: f  +------>| integral +--*----->
-;; |   +----------+       +----------+  |
-;; |                                    |
-;; +------------------------------------+
+;;  
+;;                              y_0
+;;                               |
+;;                               V
+;;      +----------+  dy   +----------+     y
+;;  +-->|  map: f  +------>| integral +--*----->
+;;  |   +----------+       +----------+  |
+;;  |                                    |
+;;  +------------------------------------+
 
 
 ;; Solving y' = f(y), the initial condition y(0) = y0
 
 (define (solve f y0 dt)
   (~>> (zero)
-       (fbc (~>>  (== _ (~>>  (reg y0)
-                              (stream-map f _)
-                              (mul dt)
-                              (fbc (~>> (== _ (reg y0)) (add +) (-< _ _)))
-                              ))
-                  2>
-                  (-< _ _)))
-       (reg y0)
+       (c-loop (~>>  (== _ (~>>  (c-reg y0)
+                                 (stream-map f _)
+                                 (c-mul dt)
+                                 (c-loop (~>> (== _ (c-reg y0)) (c-add +) (-< _ _)))
+                                 ))
+                     2>
+                     (-< _ _)))
+       (c-reg y0)
        ))
 
 ;; For example, let f(x) = x, y(0) = 1,

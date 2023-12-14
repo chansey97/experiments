@@ -22,9 +22,9 @@
 ;; The circuit is similar to sf-4.21
 
 (define-flow sf-catalan
-  (~>> (fbc (~>> (== _ (reg 0))
-                 (add +)
-                 (-< _ (~>> (-< _ _) convo))))))
+  (~>> (c-loop (~>> (== _ (c-reg 0))
+                    (c-add +)
+                    (-< _ (~>> (-< _ _) c-convo))))))
 
 (define catalan ((☯ sf-catalan) one))
 (probe (~>> (catalan) (stream-take _ 10) stream->list))

@@ -30,12 +30,12 @@
 ;; The generating function is X / (1 - X - X^2), so r0=0, r1=1, s0=1, s1=-1, s2=-1
 
 (define-flow sf
-  (~>> (fbc (~>> (== _ (~> (reg 0) (mul 1)))
-                 (add +)
-                 (fbc (~>> (== _ (~> (reg 0) (mul 1))) (add +) (-< _ _)))
-                 (reg 0)
-                 (-< _ _)))
-       (mul 1)))
+  (~>> (c-loop (~>> (== _ (~> (c-reg 0) (c-mul 1)))
+                    (c-add +)
+                    (c-loop (~>> (== _ (~> (c-reg 0) (c-mul 1))) (c-add +) (-< _ _)))
+                    (c-reg 0)
+                    (-< _ _)))
+       (c-mul 1)))
 
 ;; τ = (X / (1 - X - X^2)) σ, where σ=1
 (define fib ((☯ sf) one)) 

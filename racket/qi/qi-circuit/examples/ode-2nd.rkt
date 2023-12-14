@@ -8,21 +8,21 @@
 ;; SICP 3.5.3 Exercise 3.78
 
 ;; <<figure-3.35>> Signal-flow diagram for the solution to a second-order linear differential equation.
-;;
-;;                dy_0                y_0
-;;                 |                   |
-;;                 V                   V
-;;    ddy     +----------+    dy  +----------+    y
-;; +--------->| integral +-----*--+ integral +--*--->
-;; |          +----------+     |  +----------+  |
-;; |                           |                |
-;; |            +----------+   |                |
-;; |     __/|<--+ scale: a |<--+                |
-;; |   _/   |   +----------+                    |
-;; +--<_add |                                   |
-;;      \__ |   +----------+                    |
-;;         \|<--+ scale: b |<-------------------+
-;;              +----------+
+;;  
+;;                 dy_0                y_0
+;;                  |                   |
+;;                  V                   V
+;;     ddy     +----------+    dy  +----------+    y
+;;  +--------->| integral +-----*--+ integral +--*--->
+;;  |          +----------+     |  +----------+  |
+;;  |                           |                |
+;;  |            +----------+   |                |
+;;  |     __/|<--+ scale: a |<--+                |
+;;  |   _/   |   +----------+                    |
+;;  +--<_add |                                   |
+;;       \__ |   +----------+                    |
+;;          \|<--+ scale: b |<-------------------+
+;;               +----------+
 
 ;; Consider the problem of designing a signal-processing system to study the homogeneous second-order
 ;; linear differential equation
@@ -43,30 +43,29 @@
 
 (define (solve-2nd a b y0 dy0 dt)
   (~>> (zero)
-       (fbc (~>> (== _ (~>> (reg dy0)
-                            (-< (mul a)
-                                (~>> (mul dt)
-                                     (fbc (~>> (== _ (reg y0))
-                                               (add +)
-                                               (-< _ _)))
-                                     (reg y0)
-                                     (mul b)))
-                            (add +)
-                            (mul dt)
-                            (fbc (~>> (== _ (reg dy0))
-                                      (add +)
-                                      (-< _ _)))
-                            ;; (reg dy0)
-                            ))
-                 2>
-                 (-< _ _)
-                 ))
-       (reg dy0)
-       (mul dt)
-       (fbc (~>> (== _ (reg y0))
-                 (add +)
-                 (-< _ _)))
-       (reg y0)
+       (c-loop (~>> (== _ (~>> (c-reg dy0)
+                               (-< (c-mul a)
+                                   (~>> (c-mul dt)
+                                        (c-loop (~>> (== _ (c-reg y0))
+                                                     (c-add +)
+                                                     (-< _ _)))
+                                        (c-reg y0)
+                                        (c-mul b)))
+                               (c-add +)
+                               (c-mul dt)
+                               (c-loop (~>> (== _ (c-reg dy0))
+                                            (c-add +)
+                                            (-< _ _)))
+                               ))
+                    2>
+                    (-< _ _)
+                    ))
+       (c-reg dy0)
+       (c-mul dt)
+       (c-loop (~>> (== _ (c-reg y0))
+                    (c-add +)
+                    (-< _ _)))
+       (c-reg y0)
        ))
 
 
