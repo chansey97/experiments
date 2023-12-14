@@ -1,5 +1,6 @@
 #lang racket
 
+(require data/collection)
 (require qi)
 (require qi/probe)
 (require "../circuit.rkt")
@@ -40,7 +41,7 @@
 (define (solve f y0 dt)
   (~>> (zero)
        (c-loop (~>>  (== _ (~>>  (c-reg y0)
-                                 (stream-map f _)
+                                 (map f _)
                                  (c-mul dt)
                                  (c-loop (~>> (== _ (c-reg y0)) (c-add +) (-< _ _)))
                                  ))
