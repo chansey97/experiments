@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-1, 6) {sf-4.21};
+		\node [style=0.75 x 1 box] (1) at (5, 2) {\verb|(c-reg 0)|};
+		\node [style=none] (2) at (2, 2) {};
+		\node [style=none] (3) at (0, 4) {};
+		\node [style=none] (4) at (13, 4) {};
+		\node [style=2 x 2 box] (5) at (14.75, 3) {\verb|(c-add +)|};
+		\node [style=2 x 2 box] (6) at (20, 3) {\verb|(-< _ _)|};
+		\node [style=none] (7) at (22, 4) {};
+		\node [style=none] (8) at (22, 2) {};
+		\node [style=none] (9) at (25, 4) {};
+		\node [style=none] (10) at (23, 2) {};
+		\node [style=none] (11) at (2, 0) {};
+		\node [style=none] (12) at (23, 0) {};
+		\node [style=0.75 x 1 box] (13) at (10, 2) {\verb|(c-mul 2)|};
+		\node [style=none] (14) at (13, 2) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (2.center) to (1);
+		\draw (3.center) to (4.center);
+		\draw (5) to (6);
+		\draw (7.center) to (9.center);
+		\draw (8.center) to (10.center);
+		\draw (11.center) to (12.center);
+		\draw (12.center) to (10.center);
+		\draw (11.center) to (2.center);
+		\draw (1) to (13);
+		\draw (13) to (14.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

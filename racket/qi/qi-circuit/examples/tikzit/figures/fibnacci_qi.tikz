@@ -1,0 +1,55 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-1, 9) {fibnacci};
+		\node [style=0.75 x 1 box] (1) at (5, 4) {\verb|(c-reg 0)|};
+		\node [style=none] (2) at (2, 4) {};
+		\node [style=0.75 x 1 box] (3) at (10, 4) {\verb|(c-mul 1)|};
+		\node [style=none, label={above:\texttt{(1 0 0 ...)}}] (4) at (0, 6) {};
+		\node [style=none] (5) at (13, 6) {};
+		\node [style=2 x 2 box] (6) at (15, 5) {\verb|(c-add +)|};
+		\node [style=none] (7) at (17, 5) {};
+		\node [style=none] (8) at (2, 0) {};
+		\node [style=0.75 x 1 box] (9) at (22, 3) {\verb|(c-reg 0)|};
+		\node [style=none] (10) at (19, 3) {};
+		\node [style=0.75 x 1 box] (11) at (27, 3) {\verb|(c-mul 1)|};
+		\node [style=none] (12) at (30, 5) {};
+		\node [style=2 x 2 box] (13) at (32, 4) {\verb|(c-add +)|};
+		\node [style=2 x 2 box] (14) at (37, 4) {\verb|(-< _ _)|};
+		\node [style=none] (15) at (39, 5) {};
+		\node [style=none] (16) at (39, 3) {};
+		\node [style=0.75 x 1 box] (17) at (43, 5) {\verb|(c-reg 0)|};
+		\node [style=none] (18) at (40, 3) {};
+		\node [style=none] (19) at (19, 1) {};
+		\node [style=none] (20) at (40, 1) {};
+		\node [style=2 x 2 box] (21) at (48, 5) {\verb|(-< _ _)|};
+		\node [style=none] (22) at (50, 6) {};
+		\node [style=none] (23) at (50, 4) {};
+		\node [style=none] (24) at (53, 6) {};
+		\node [style=none] (25) at (52, 0) {};
+		\node [style=none] (26) at (52, 4) {};
+		\node [style=none] (27) at (13, 4) {};
+		\node [style=none] (28) at (30, 3) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (2.center) to (1);
+		\draw (4.center) to (5.center);
+		\draw (8.center) to (2.center);
+		\draw (1) to (3);
+		\draw (10.center) to (9);
+		\draw (13) to (14);
+		\draw (15.center) to (17);
+		\draw (16.center) to (18.center);
+		\draw (19.center) to (20.center);
+		\draw (20.center) to (18.center);
+		\draw (19.center) to (10.center);
+		\draw (9) to (11);
+		\draw (7.center) to (12.center);
+		\draw [in=180, out=0] (17) to (21);
+		\draw (22.center) to (24.center);
+		\draw (8.center) to (25.center);
+		\draw (23.center) to (26.center);
+		\draw (26.center) to (25.center);
+		\draw (27.center) to (3);
+		\draw (28.center) to (11);
+	\end{pgfonlayer}
+\end{tikzpicture}

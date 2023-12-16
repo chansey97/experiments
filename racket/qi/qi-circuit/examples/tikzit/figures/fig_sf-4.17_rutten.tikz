@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (0, 0) {};
+		\node [style=0.5 x 0.5 box] (1) at (2, 0) {\verb|+|};
+		\node [style=none] (2) at (2, 2) {};
+		\node [style=0.5 x 0.5 box] (3) at (4, 2) {\verb|R|};
+		\node [style=none] (4) at (6, 2) {};
+		\node [style=0.5 x 0.5 box] (5) at (6, 0) {\verb|-<|};
+		\node [style=none] (6) at (6, 2) {};
+		\node [style=none] (7) at (8, 0) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (5) to (6.center);
+		\draw [style=forward arrow] (3) to (2.center);
+		\draw (2.center) to (1);
+		\draw (1) to (5);
+		\draw [in=180, out=0] (5) to (7.center);
+		\draw [style=forward arrow] (0.center) to (1);
+		\draw (6.center) to (3);
+	\end{pgfonlayer}
+\end{tikzpicture}

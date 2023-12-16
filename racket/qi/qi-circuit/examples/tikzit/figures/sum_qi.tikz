@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=2 x 2 box] (30) at (10, 3) {\verb|(c-add +)|};
+		\node [style=none] (31) at (8.5, 4) {};
+		\node [style=none] (32) at (0, 4) {};
+		\node [style=0.75 x 1 box] (33) at (5, 2) {\verb|(c-reg init)|};
+		\node [style=none] (34) at (2, 2) {};
+		\node [style=0.75 x 1 box] (35) at (20, 4) {\verb|(c-reg init)|};
+		\node [style=none] (36) at (17.5, 0) {};
+		\node [style=none] (37) at (2, 0) {};
+		\node [style=2 x 2 box] (38) at (14.5, 3) {\verb|(-< _ _)|};
+		\node [style=none] (39) at (16, 4) {};
+		\node [style=none] (40) at (17.5, 2) {};
+		\node [style=none] (41) at (16, 2) {};
+		\node [style=none] (42) at (8.5, 2) {};
+		\node [style=none] (43) at (23.5, 4) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (32.center) to (31.center);
+		\draw (34.center) to (33);
+		\draw (37.center) to (36.center);
+		\draw (37.center) to (34.center);
+		\draw (40.center) to (36.center);
+		\draw (35) to (39.center);
+		\draw (41.center) to (40.center);
+		\draw (42.center) to (33);
+		\draw (35) to (43.center);
+		\draw (30) to (38);
+	\end{pgfonlayer}
+\end{tikzpicture}

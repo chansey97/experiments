@@ -1,0 +1,39 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-1, 9) {catalan};
+		\node [style=0.75 x 1 box] (1) at (5, 4) {\verb|(c-reg 1)|};
+		\node [style=none] (2) at (2, 4) {};
+		\node [style=none] (3) at (8, 4) {};
+		\node [style=none, label={above:\texttt{(1 0 0 ...)}}] (4) at (0, 6) {};
+		\node [style=none] (5) at (8, 6) {};
+		\node [style=2 x 2 box] (6) at (10, 5) {\verb|(c-add +)|};
+		\node [style=2 x 2 box] (7) at (15, 5) {\verb|(-< _ _)|};
+		\node [style=none] (8) at (17, 6) {};
+		\node [style=none] (9) at (17, 4) {};
+		\node [style=none] (10) at (33, 6) {};
+		\node [style=none] (11) at (2, 0) {};
+		\node [style=2 x 2 box] (12) at (21, 3) {\verb|(-< _ _)|};
+		\node [style=2 x 2 box] (13) at (27, 3) {\verb|c-convo|};
+		\node [style=none] (14) at (23, 4) {};
+		\node [style=none] (15) at (26, 4) {};
+		\node [style=none] (16) at (23, 2) {};
+		\node [style=none] (17) at (26, 2) {};
+		\node [style=none] (18) at (31, 3) {};
+		\node [style=none] (19) at (31, 0) {};
+		\node [style=none] (20) at (21, 4) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (2.center) to (1);
+		\draw (4.center) to (5.center);
+		\draw (6) to (7);
+		\draw (8.center) to (10.center);
+		\draw (11.center) to (2.center);
+		\draw (1) to (3.center);
+		\draw (14.center) to (15.center);
+		\draw (16.center) to (17.center);
+		\draw (18.center) to (13);
+		\draw (19.center) to (11.center);
+		\draw (18.center) to (19.center);
+		\draw (9.center) to (20.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

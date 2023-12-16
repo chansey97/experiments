@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (0, 0) {};
+		\node [style=0.075 dot white] (1) at (2, 0) {+};
+		\node [style=0.15 dot none] (2) at (2, 3) {};
+		\node [style=0.075 dot none] (3) at (5, 3) {R};
+		\node [style=none] (4) at (7, 2) {};
+		\node [style=0.075 dot white] (5) at (8, 0) {C};
+		\node [style=0.15 dot none] (6) at (8, 3) {};
+		\node [style=none] (7) at (10, 0) {};
+		\node [style=0.05 dot white 2] (8) at (8, 3) {};
+		\node [style=0.05 dot white 2] (9) at (2, 3) {};
+		\node [style=0.75 x 1 box] (11) at (5, -6) {\verb|(c-reg 0)|};
+		\node [style=none] (12) at (2, -6) {};
+		\node [style=none] (13) at (8, -6) {};
+		\node [style=none] (14) at (0, -4) {};
+		\node [style=none] (15) at (8, -4) {};
+		\node [style=2 x 2 box] (16) at (10, -5) {\verb|(c-add +)|};
+		\node [style=2 x 2 box] (17) at (15, -5) {\verb|(-< _ _)|};
+		\node [style=none] (18) at (17, -4) {};
+		\node [style=none] (19) at (17, -6) {};
+		\node [style=none] (20) at (20, -4) {};
+		\node [style=none] (21) at (18, -6) {};
+		\node [style=none] (22) at (2, -8) {};
+		\node [style=none] (23) at (18, -8) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=forward arrow] (3) to (2);
+		\draw (1) to (5);
+		\draw [style=forward arrow, in=180, out=0] (5) to (7.center);
+		\draw [style=forward arrow] (0.center) to (1);
+		\draw [style=none mapsto] (6) to (3);
+		\draw [style=forward mapsto] (2) to (1);
+		\draw [style=forward mapsto] (5) to (6);
+		\draw (12.center) to (11);
+		\draw (14.center) to (15.center);
+		\draw (16) to (17);
+		\draw (18.center) to (20.center);
+		\draw (19.center) to (21.center);
+		\draw (22.center) to (23.center);
+		\draw (23.center) to (21.center);
+		\draw (22.center) to (12.center);
+		\draw (11) to (13.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

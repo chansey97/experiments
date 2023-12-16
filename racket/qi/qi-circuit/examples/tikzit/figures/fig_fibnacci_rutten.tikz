@@ -1,0 +1,49 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none, label={above:$\sigma = (1,0,0 ...)$}] (18) at (0, 5) {};
+		\node [style=white dot] (19) at (4, 5) {};
+		\node [style=none] (20) at (12, 5) {};
+		\node [style=none] (25) at (18.75, 5) {};
+		\node [style=0.5 x 0.5 box] (26) at (6.5, 5) {\verb|R|};
+		\node [style=0.5 x 0.5 box] (27) at (10.5, 5) {\verb|R|};
+		\node [style=none] (28) at (9, 5) {};
+		\node [style=none] (29) at (15, 5) {};
+		\node [style=0.5 x 0.5 box] (31) at (6.5, 3) {1};
+		\node [style=0.5 x 0.5 box] (32) at (8, 1.5) {1};
+		\node [style=0.5 x 0.5 box] (33) at (12, 6.5) {1};
+		\node [style=none, label={above:$\sigma = (1,0,0 ...)$}] (34) at (0, -3) {};
+		\node [style=0.5 x 0.5 box] (35) at (4, -3) {\verb|+|};
+		\node [style=none] (36) at (16, -3) {};
+		\node [style=none] (37) at (18.75, -3) {};
+		\node [style=0.5 x 0.5 box] (38) at (8, -3) {\verb|R|};
+		\node [style=0.5 x 0.5 box] (39) at (14, -3) {\verb|R|};
+		\node [style=0.5 x 0.5 box] (40) at (10, -3) {\verb|-<|};
+		\node [style=none] (41) at (17, -3) {};
+		\node [style=0.5 x 0.5 box] (43) at (10, -8.25) {1};
+		\node [style=0.5 x 0.5 box] (44) at (14.5, -1) {1};
+		\node [style=0.5 x 0.5 box] (45) at (6, -3) {\verb|+|};
+		\node [style=0.5 x 0.5 box] (46) at (12, -3) {\verb|-<|};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=forward arrow] (18.center) to (19);
+		\draw [style=forward arrow, bend left=75, looseness=1.50] (20.center) to (19);
+		\draw [style=forward mapsto] (19) to (26);
+		\draw [style=forward arrow] (27) to (20.center);
+		\draw [style=forward mapsto, bend left=60] (28.center) to (29.center);
+		\draw [style=forward arrow, bend left=60, looseness=1.50] (28.center) to (19);
+		\draw [style=forward arrow] (26) to (28.center);
+		\draw (28.center) to (27);
+		\draw [style=forward arrow] (29.center) to (25.center);
+		\draw [style=forward arrow] (34.center) to (35);
+		\draw [style=forward arrow, bend left=75, looseness=1.50] (36.center) to (35);
+		\draw [style=forward arrow] (39) to (36.center);
+		\draw [style=forward arrow, in=180, out=0] (38) to (40);
+		\draw [style=forward arrow] (41.center) to (37.center);
+		\draw (35) to (45);
+		\draw [style=forward arrow, bend left=75, looseness=1.50] (40) to (45);
+		\draw (45) to (38);
+		\draw (40) to (46);
+		\draw (46) to (39);
+		\draw [bend left=75, looseness=1.25] (46) to (41.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

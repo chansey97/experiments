@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=2 x 2 box] (0) at (15, 3) {\verb|(c-add +)|};
+		\node [style=none] (1) at (13, 4) {};
+		\node [style=0.75 x 1 box] (2) at (5, 4) {\verb|(c-mul dt)|};
+		\node [style=0.75 x 1 box] (3) at (10, 2) {\verb|(c-reg init)|};
+		\node [style=none] (4) at (7, 2) {};
+		\node [style=none] (5) at (17, 3) {};
+		\node [style=0.75 x 1 box] (6) at (25, 4) {\verb|(c-reg init)|};
+		\node [style=none] (7) at (23, 0) {};
+		\node [style=none] (8) at (7, 0) {};
+		\node [style=2 x 2 box] (9) at (20, 3) {\verb|(-< _ _)|};
+		\node [style=none] (10) at (22, 4) {};
+		\node [style=none] (11) at (23, 2) {};
+		\node [style=none] (12) at (22, 2) {};
+		\node [style=none] (13) at (13, 2) {};
+		\node [style=none] (14) at (28, 4) {};
+		\node [style=none] (15) at (0, 4) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (2) to (1.center);
+		\draw (4.center) to (3);
+		\draw (8.center) to (7.center);
+		\draw (8.center) to (4.center);
+		\draw (5.center) to (9);
+		\draw (11.center) to (7.center);
+		\draw (6) to (10.center);
+		\draw (12.center) to (11.center);
+		\draw (13.center) to (3);
+		\draw (6) to (14.center);
+		\draw (15.center) to (2);
+	\end{pgfonlayer}
+\end{tikzpicture}
